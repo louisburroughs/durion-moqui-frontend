@@ -147,3 +147,12 @@ When documenting, use these components as style references:
 - ✅ **Always do:** Write new files to `docs/`, follow Markdown conventions, run markdownlint, read XML DSLs and Groovy code to understand features, document both framework and component features
 - ⚠️ **Ask first:** Before modifying existing documents significantly, before adding new documentation sections, before documenting undocumented components
 - 🚫 **Never do:** Modify Java/Groovy code in `framework/src/main/` or `runtime/component/*/src/`, edit build.gradle files, modify component.xml, edit MoquiConf.xml files, commit secrets
+
+## Integration with Other Agents
+
+- **Document implementations from `moqui_developer_agent`** - Create clear documentation for all new services, entities, and screens
+- **Work with `architecture_agent`** to document domain boundaries, patterns, and architectural decisions
+- **Coordinate with `api_agent`** to document REST endpoints, contracts, and integration examples
+- **Document metrics from `sre_agent`** - Create METRICS.md files for each component with all observability details
+- **Collaborate with `test_agent`** to document test strategies and coverage expectations
+- **Support all agents** by maintaining clear, up-to-date documentation that enables effective collaboration

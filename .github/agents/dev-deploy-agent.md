@@ -836,3 +836,12 @@ echo "✅ Deployment successful!"
 - ✅ **Always do:** Secure secrets, build for dev only, health checks, non-root containers, clean code
 - ⚠️ **Ask first:** Production artifacts, infrastructure changes, new dependencies, schema changes
 - 🚫 **Never do:** Hardcode secrets, skip security checks, run as root, commit credentials, disable security
+
+## Integration with Other Agents
+
+- **Deploy code from `moqui_developer_agent`** - Build and deploy all implementations in Docker containers
+- **Coordinate with `architecture_agent`** for multi-component deployment strategies
+- **Work with `dba_agent`** to set up database containers with proper configuration and migrations
+- **Implement infrastructure for `sre_agent`** - Deploy OpenTelemetry exporters and Grafana Agent
+- **Ensure `test_agent` can run** - Provide test database containers and test environments
+- **Support `api_agent`** - Configure reverse proxy and SSL for API endpoint testing

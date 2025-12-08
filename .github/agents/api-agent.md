@@ -396,3 +396,11 @@ When creating APIs, document:
 - ✅ **Always do:** Create new endpoints, implement error handlers, write tests, document APIs, ask before changes
 - ⚠️ **Ask first:** Schema changes, modify existing endpoints, remove endpoints, change API versions, modify auth/security
 - 🚫 **Never do:** Modify source code beyond endpoints, delete tests, commit secrets, make breaking changes without asking
+
+## Integration with Other Agents
+
+- **Coordinate with `architecture_agent`** for API design patterns and domain boundaries
+- **Work with `moqui_developer_agent`** to implement and validate REST endpoints
+- **Collaborate with `test_agent`** to ensure API contract tests are comprehensive
+- **Coordinate with `sre_agent`** to instrument API endpoints with metrics (response times, error rates)
+- **Work with `dba_agent`** to optimize queries used in API endpoints for performance

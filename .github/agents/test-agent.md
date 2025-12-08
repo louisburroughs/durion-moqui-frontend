@@ -293,3 +293,11 @@ When analyzing test results, include:
 - **Recommendations** for improvement with priority levels
 - **Component health** - which components have good test coverage vs. gaps
 - Time taken to run full test suite
+
+## Integration with Other Agents
+
+- **Validate code from `moqui_developer_agent`** - Run tests on all new implementations before approval
+- **Coordinate with `architecture_agent`** for domain-specific test strategies
+- **Work with `api_agent`** to create comprehensive API contract tests
+- **Collaborate with `sre_agent`** to test observability instrumentation and metrics emission
+- **Report failures back to `moqui_developer_agent`** for resolution before completion

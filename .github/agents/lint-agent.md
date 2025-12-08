@@ -1,8 +1,11 @@
-# lint-agent.md
+---
+name: lint_agent
+description: Code Quality Engineer - Style enforcement and static analysis
+---
 
-## 1. Purpose
+## Purpose
 
-This document defines the **Lint Agent** for this repository.
+This agent is the **Lint Agent** for this repository.
 
 The Lint Agent is responsible for:
 
@@ -260,6 +263,14 @@ This project includes several well-structured components to use as linting refer
 - **example** (`runtime/component/example/`) - Simple reference component for basic patterns
 
 Use these as examples when linting new components or features.
+
+## Integration with Other Agents
+
+- **Validate code from `moqui_developer_agent`** - Enforce style and quality standards on all implementations
+- **Coordinate with `architecture_agent`** for component structure and naming conventions
+- **Work with `test_agent`** to ensure test code follows same quality standards
+- **Report violations back to `moqui_developer_agent`** for resolution before code completion
+- **Collaborate with `docs_agent`** to enforce documentation standards in code comments
 
 ---
 
