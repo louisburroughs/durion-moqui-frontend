@@ -3,5 +3,14 @@
     <!-- Custom or overridden component definitions -->
     
     <!-- durion-theme component -->
-    <component name="durion-theme" group="louisburroughs" version="" branch="main"/>
+    <component name="durion-theme" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-workexec" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-experience" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-inventory" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-crm" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-demo-data" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-product" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-common" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-accounting" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-positivity" group="louisburroughs" version="1" branch="main"/>
 </addons>

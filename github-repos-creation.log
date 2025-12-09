@@ -1,0 +1,198 @@
+Creating GitHub repositories for Durion components...
+
+Processing: durion-accounting
+  ⚠ No git repository found, initializing...
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/n541342/IdeaProjects/moqui_example/runtime/component/durion-accounting/.git/
+[master (root-commit) 1a6a683] Initial commit: durion-accounting component structure
+ 3 files changed, 70 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+ create mode 100644 component.xml
+https://github.com/louisburroughs/durion-accounting
+  ⚠ Created but push may have issues
+
+Processing: durion-common
+  ⚠ No git repository found, initializing...
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/n541342/IdeaProjects/moqui_example/runtime/component/durion-common/.git/
+[master (root-commit) 55e7dae] Initial commit: durion-common component structure
+ 3 files changed, 68 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+ create mode 100644 component.xml
+https://github.com/louisburroughs/durion-common
+  ⚠ Created but push may have issues
+
+Processing: durion-crm
+  ⚠ No git repository found, initializing...
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/n541342/IdeaProjects/moqui_example/runtime/component/durion-crm/.git/
+[master (root-commit) 7f3d6be] Initial commit: durion-crm component structure
+ 3 files changed, 68 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+ create mode 100644 component.xml
+https://github.com/louisburroughs/durion-crm
+  ⚠ Created but push may have issues
+
+Processing: durion-demo-data
+https://github.com/louisburroughs/durion-demo-data
+  ⚠ Created but push may have issues
+
+Processing: durion-experience
+  ⚠ No git repository found, initializing...
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/n541342/IdeaProjects/moqui_example/runtime/component/durion-experience/.git/
+[master (root-commit) b1c2531] Initial commit: durion-experience component structure
+ 3 files changed, 70 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+ create mode 100644 component.xml
+https://github.com/louisburroughs/durion-experience
+  ⚠ Created but push may have issues
+
+Processing: durion-inventory
+  ⚠ No git repository found, initializing...
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/n541342/IdeaProjects/moqui_example/runtime/component/durion-inventory/.git/
+[master (root-commit) ea474ce] Initial commit: durion-inventory component structure
+ 3 files changed, 69 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+ create mode 100644 component.xml
+https://github.com/louisburroughs/durion-inventory
+  ⚠ Created but push may have issues
+
+Processing: durion-positivity
+  ⚠ No git repository found, initializing...
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/n541342/IdeaProjects/moqui_example/runtime/component/durion-positivity/.git/
+On branch master
+
+Initial commit
+
+nothing to commit (create/copy files and use "git add" to track)
+https://github.com/louisburroughs/durion-positivity
+  ⚠ Created but push may have issues
+
+Processing: durion-product
+  ⚠ No git repository found, initializing...
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/n541342/IdeaProjects/moqui_example/runtime/component/durion-product/.git/
+[master (root-commit) 580f477] Initial commit: durion-product component structure
+ 3 files changed, 69 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+ create mode 100644 component.xml
+https://github.com/louisburroughs/durion-product
+  ⚠ Created but push may have issues
+
+Processing: durion-theme
+  ✓ Already exists, skipping
+Processing: durion-workexec
+  ⚠ No git repository found, initializing...
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /home/n541342/IdeaProjects/moqui_example/runtime/component/durion-workexec/.git/
+[master (root-commit) 8516a0b] Initial commit: durion-workexec component structure
+ 3 files changed, 71 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+ create mode 100644 component.xml
+https://github.com/louisburroughs/durion-workexec
+  ⚠ Created but push may have issues
+
+════════════════════════════════════════════════════════════════════
+Summary:
+  ✓ Created:  9
+  ⊘ Skipped:  1
+  ✗ Failed:   0
+════════════════════════════════════════════════════════════════════
