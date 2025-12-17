@@ -71,6 +71,10 @@ Desktop.ini
 # Linux auto files
 *~
 
-### AI Session Files ###
+# AI Session Files ###
 .ai/session.md
 .ai/session-*.md
+
+#Kiro logs
+.kiro/run-logs/*
+.kiro/run-logs

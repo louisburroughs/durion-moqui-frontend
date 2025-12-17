@@ -391,6 +391,242 @@ MoquiAgentHierarchy:
 - Coordinates with workspace-level agents for cross-project documentation
 - Collaborates with Experience Layer Agent for API documentation
 
+## Code Generation Structure
+
+All agent implementations, test classes, and generated artifacts are organized within the `.kiro/generated/` directory to maintain clear separation from application code and support automated code generation workflows.
+
+### Directory Structure
+
+```
+moqui_example/
+├── .kiro/
+│   ├── generated/
+│   │   ├── agents/
+│   │   │   ├── foundation/
+│   │   │   │   ├── MoquiFrameworkAgentImpl.groovy
+│   │   │   │   ├── ArchitectureAgentImpl.groovy
+│   │   │   │   └── VueAgentImpl.groovy
+│   │   │   ├── implementation/
+│   │   │   │   ├── DomainAgentImpl.groovy
+│   │   │   │   ├── ExperienceLayerAgentImpl.groovy
+│   │   │   │   └── FrontendAgentImpl.groovy
+│   │   │   ├── infrastructure/
+│   │   │   │   ├── SecurityAgentImpl.groovy
+│   │   │   │   ├── DevOpsAgentImpl.groovy
+│   │   │   │   └── DatabaseAgentImpl.groovy
+│   │   │   ├── quality/
+│   │   │   │   ├── TestingAgentImpl.groovy
+│   │   │   │   ├── PerformanceAgentImpl.groovy
+│   │   │   │   └── PairNavigatorAgentImpl.groovy
+│   │   │   └── support/
+│   │   │       ├── DocumentationAgentImpl.groovy
+│   │   │       ├── IntegrationAgentImpl.groovy
+│   │   │       └── APIContractAgentImpl.groovy
+│   │   ├── tests/
+│   │   │   ├── specs/
+│   │   │   │   ├── MoquiFrameworkAgentSpec.groovy      # Spock specifications
+│   │   │   │   ├── DomainAgentSpec.groovy
+│   │   │   │   ├── SecurityAgentSpec.groovy
+│   │   │   │   └── ...
+│   │   │   ├── properties/
+│   │   │   │   ├── AgentPerformanceProperties.groovy    # jqwik property tests
+│   │   │   │   ├── AgentCorrectnessProperties.groovy
+│   │   │   │   └── IntegrationProperties.groovy
+│   │   │   └── integration/
+│   │   │       ├── PositivityIntegrationSpec.groovy
+│   │   │       ├── CrossAgentCollaborationSpec.groovy
+│   │   │       └── ...
+│   │   ├── models/
+│   │   │   ├── AgentRequest.groovy
+│   │   │   ├── AgentResponse.groovy
+│   │   │   ├── contexts/
+│   │   │   │   ├── MoquiContext.groovy
+│   │   │   │   ├── VueContext.groovy
+│   │   │   │   └── DomainContext.groovy
+│   │   │   └── guidance/
+│   │   │       ├── EntityGuidance.groovy
+│   │   │       ├── ServiceGuidance.groovy
+│   │   │       └── ...
+│   │   ├── config/
+│   │   │   ├── agent-registry.yaml
+│   │   │   ├── collaboration-rules.yaml
+│   │   │   └── performance-thresholds.yaml
+│   │   └── docs/
+│   │       ├── agent-api/
+│   │       └── integration-guides/
+│   └── specs/
+│       └── agent-structure/
+│           ├── design.md
+│           └── requirements.md
+```
+
+### Code Generation Patterns
+
+#### Agent Implementation Classes
+
+Agent implementations in `.kiro/generated/agents/` follow these patterns:
+
+```groovy
+// Example: .kiro/generated/agents/foundation/MoquiFrameworkAgentImpl.groovy
+package durion.moqui.agents.foundation
+
+import durion.moqui.agents.Agent
+import durion.moqui.agents.MoquiFrameworkAgent
+import durion.moqui.models.*
+
+class MoquiFrameworkAgentImpl implements MoquiFrameworkAgent {
+    
+    private final AgentRegistry registry
+    private final ContextManager contextManager
+    private final KnowledgeBase knowledgeBase
+    
+    @Override
+    String getAgentId() { return "moqui-framework-agent" }
+    
+    @Override
+    String getAgentName() { return "Moqui Framework Agent" }
+    
+    @Override
+    Set<String> getCapabilities() {
+        return ["entity-guidance", "service-guidance", "screen-guidance", 
+                "positivity-integration"] as Set
+    }
+    
+    @Override
+    EntityGuidance provideEntityGuidance(EntityContext context) {
+        // Generated implementation logic
+        // Response time target: 2 seconds (REQ-001 AC1)
+        // Accuracy target: 95% (REQ-001 AC1)
+    }
+    
+    // Additional method implementations...
+}
+```
+
+#### Test Class Generation
+
+Test specifications in `.kiro/generated/tests/specs/` use Spock Framework:
+
+```groovy
+// Example: .kiro/generated/tests/specs/MoquiFrameworkAgentSpec.groovy
+package durion.moqui.agents.specs
+
+import spock.lang.Specification
+import spock.lang.Timeout
+import java.util.concurrent.TimeUnit
+
+class MoquiFrameworkAgentSpec extends Specification {
+    
+    MoquiFrameworkAgentImpl agent
+    
+    def setup() {
+        agent = new MoquiFrameworkAgentImpl(
+            registry: Mock(AgentRegistry),
+            contextManager: Mock(ContextManager),
+            knowledgeBase: Mock(KnowledgeBase)
+        )
+    }
+    
+    @Timeout(value = 2, unit = TimeUnit.SECONDS)
+    def "should provide entity guidance within 2 seconds"() {
+        given: "an entity context for a DETSMS entity"
+        def context = new EntityContext(
+            entityName: "WorkOrder",
+            domain: "WorkExecution"
+        )
+        
+        when: "entity guidance is requested"
+        def guidance = agent.provideEntityGuidance(context)
+        
+        then: "guidance is provided with 95% accuracy"
+        guidance != null
+        guidance.recommendations.size() > 0
+        guidance.accuracy >= 0.95
+        guidance.responseTime <= 2000 // milliseconds
+    }
+    
+    // Additional test cases mapping to REQ-001 acceptance criteria...
+}
+```
+
+#### Property-Based Test Generation
+
+Correctness properties in `.kiro/generated/tests/properties/` use jqwik:
+
+```groovy
+// Example: .kiro/generated/tests/properties/AgentPerformanceProperties.groovy
+package durion.moqui.agents.properties
+
+import net.jqwik.api.*
+import durion.moqui.agents.foundation.MoquiFrameworkAgentImpl
+
+class AgentPerformanceProperties {
+    
+    @Property
+    @Label("REQ-009 AC1: Agent responses complete within 3 seconds")
+    boolean allAgentResponsesComplete Within3Seconds(
+        @ForAll("agentTypes") String agentType,
+        @ForAll("requestContexts") AgentRequest request
+    ) {
+        def agent = createAgent(agentType)
+        def startTime = System.currentTimeMillis()
+        def response = agent.processRequest(request)
+        def duration = System.currentTimeMillis() - startTime
+        
+        return duration < 3000 // 3 seconds in milliseconds
+    }
+    
+    @Property
+    @Label("REQ-009 AC2: System supports 50 concurrent developers")
+    boolean systemSupports50ConcurrentUsers(
+        @ForAll @IntRange(min = 1, max = 50) int concurrentUsers
+    ) {
+        def requests = generateConcurrentRequests(concurrentUsers)
+        def responses = executeParallel(requests)
+        def performanceDegradation = calculateDegradation(responses)
+        
+        return performanceDegradation < 0.10 // Less than 10% degradation
+    }
+    
+    // Additional property tests for REQ-009 through REQ-014...
+}
+```
+
+### Generation Workflow
+
+1. **Agent Interface Definition**: Groovy interfaces defined in design specification
+2. **Implementation Generation**: KIRO generates agent implementation stubs in `.kiro/generated/agents/`
+3. **Test Generation**: KIRO generates Spock specifications and jqwik properties in `.kiro/generated/tests/`
+4. **Model Generation**: Data model classes generated in `.kiro/generated/models/`
+5. **Configuration Generation**: YAML configuration files generated in `.kiro/generated/config/`
+
+### Build Integration
+
+Generated code integrates with Gradle build:
+
+```gradle
+// build.gradle
+sourceSets {
+    main {
+        groovy {
+            srcDirs += ['.kiro/generated/agents', '.kiro/generated/models']
+        }
+    }
+    test {
+        groovy {
+            srcDirs += ['.kiro/generated/tests']
+        }
+    }
+}
+
+// Clean task to regenerate code
+task cleanGenerated(type: Delete) {
+    delete '.kiro/generated/agents', '.kiro/generated/tests', '.kiro/generated/models'
+}
+
+clean.dependsOn cleanGenerated
+```
+
 ## Data Models
 
 ### Core Data Models
@@ -659,6 +895,176 @@ After reviewing all properties identified in the prework, several areas of redun
 *For any* performance optimization task (services, screens, workflows, monitoring), agents should provide guidance that considers both Moqui-specific patterns and positivity backend coordination
 **Validates: Requirements 8.2, 8.3, 8.4, 8.5**
 
+## Data Architecture Constraints
+
+The agent structure system operates under strict data architecture constraints to ensure proper separation of concerns and maintain system integrity.
+
+### Database Usage Rules
+
+Per requirements specification, the agent system follows these database usage rules:
+
+#### Local Database Scope (State and Caching Only)
+
+The Moqui local database (PostgreSQL or MySQL) is used **exclusively** for:
+
+1. **Agent State Management**
+   - Agent health status and availability tracking
+   - Active session contexts and conversation state
+   - Agent collaboration workflow state
+   - Request routing and load balancing metadata
+
+2. **Performance Caching**
+   - Cached agent responses for frequently requested guidance
+   - Moqui pattern and best practice knowledge cache
+   - Vue.js component template cache
+   - Recently accessed durion-positivity integration patterns
+
+3. **Temporary Data**
+   - Request queue data for asynchronous processing
+   - Temporary context storage during multi-agent collaboration
+   - Performance metrics aggregation before export to monitoring systems
+
+4. **Configuration Data**
+   - Agent registry configuration
+   - Collaboration rules and routing policies
+   - Performance threshold configurations
+   - Security policies and access control lists
+
+**Prohibited Local Database Usage:**
+- ❌ Business domain data (WorkOrders, Inventory, Customers, Vehicles, etc.)
+- ❌ Transaction data (Orders, Invoices, Payments, etc.)
+- ❌ Master data (Products, Pricing, Locations, etc.)
+- ❌ Any data that belongs to DETSMS business domains
+
+#### Business Data from Positivity Backend
+
+All business domain data must be accessed through the **durion-positivity integration component** which provides:
+
+1. **API Gateway Pattern**
+   - Groovy services that wrap positivity-backend REST APIs
+   - Consistent error handling and retry logic
+   - Request/response transformation between Moqui and Spring Boot formats
+   - Circuit breaker pattern for resilience
+
+2. **Business Domain APIs**
+   - Work Execution domain data (WorkOrders, ServiceRecords, TechnicianSchedules)
+   - Inventory domain data (StockLevels, Transfers, Adjustments)
+   - Product & Pricing domain data (Products, PriceLists, Promotions)
+   - CRM domain data (Customers, Contacts, Communications)
+   - Accounting domain data (Invoices, Payments, Ledgers)
+
+3. **Data Flow Architecture**
+
+```mermaid
+graph LR
+    subgraph "Moqui Frontend"
+        SCREEN[Moqui Screens]
+        SERVICE[Moqui Services]
+        AGENT[Agent System]
+        LOCALDB[(Local PostgreSQL<br/>State & Cache Only)]
+    end
+    
+    subgraph "Integration Layer"
+        DURION[durion-positivity<br/>Integration Component]
+    end
+    
+    subgraph "Positivity Backend"
+        API[REST APIs]
+        BIZDB[(PostgreSQL<br/>Business Data)]
+    end
+    
+    SCREEN --> SERVICE
+    SERVICE --> DURION
+    AGENT --> DURION
+    AGENT -.Cache/State.-> LOCALDB
+    DURION --> API
+    API --> BIZDB
+    
+    style LOCALDB fill:#e1f5fe
+    style BIZDB fill:#fff3e0
+    style DURION fill:#f3e5f5
+```
+
+### Integration Component Requirements
+
+The **durion-positivity** integration component must:
+
+1. **Provide Type-Safe APIs**
+   - Groovy interfaces matching positivity backend REST endpoints
+   - Request/response DTOs with Moqui-friendly naming conventions
+   - Proper error types and exception handling
+
+2. **Implement Resilience Patterns**
+   - Circuit breaker with configurable thresholds
+   - Retry logic with exponential backoff
+   - Fallback to cached data when available (REQ-010 AC3)
+   - Timeout configuration per API endpoint
+
+3. **Ensure Security**
+   - JWT token management for API authentication
+   - Token refresh logic
+   - Secure credential storage using Moqui entity encryption
+   - Role-based access control enforcement
+
+4. **Monitor Integration Health**
+   - Request/response time tracking
+   - Error rate monitoring by endpoint
+   - Circuit breaker state tracking
+   - Alert on integration failures
+
+### Example Integration Service
+
+```groovy
+// component://durion-positivity/service/WorkExecution.groovy
+package durion.positivity.integration
+
+import groovy.transform.CompileStatic
+import durion.positivity.client.PositivityAPIClient
+import durion.positivity.models.WorkOrderDTO
+
+@CompileStatic
+class WorkExecutionService {
+    
+    private final PositivityAPIClient apiClient
+    private final CacheManager cacheManager
+    
+    // Fetch work order from positivity backend
+    WorkOrderDTO getWorkOrder(String workOrderId) {
+        // Check cache first (local DB for performance)
+        def cached = cacheManager.get("workorder:${workOrderId}", WorkOrderDTO)
+        if (cached) return cached
+        
+        try {
+            // Call positivity backend REST API
+            def response = apiClient.get("/api/work-execution/orders/${workOrderId}")
+            def workOrder = response.body as WorkOrderDTO
+            
+            // Cache for 5 minutes (state/cache usage)
+            cacheManager.put("workorder:${workOrderId}", workOrder, 300)
+            
+            return workOrder
+        } catch (CircuitBreakerOpenException e) {
+            // Fallback to cached data if available (even if stale)
+            def staleCache = cacheManager.getStale("workorder:${workOrderId}")
+            if (staleCache) {
+                log.warn("Using stale cache for work order ${workOrderId} due to circuit breaker")
+                return staleCache
+            }
+            throw new IntegrationException("Work order ${workOrderId} unavailable", e)
+        }
+    }
+}
+```
+
+### Constraint Enforcement
+
+The agent system enforces these constraints through:
+
+1. **Code Generation Rules**: Generated agents include validation logic preventing direct business data queries
+2. **Review Guidance**: Agents provide warnings when developers attempt to store business data locally
+3. **Testing**: Property-based tests verify no business data is accessed from local database
+4. **Monitoring**: Alerts trigger when unexpected table access patterns are detected
+
 ## Error Handling
 
 ### Error Classification
@@ -687,11 +1093,241 @@ After reviewing all properties identified in the prework, several areas of redun
 - **Metrics Collection**: Error rate and type metrics for monitoring
 - **Alert Integration**: Integration with monitoring systems for critical errors
 
+### Integration Failure Patterns
+
+Detailed handling for integration failures as specified in REQ-014:
+
+#### 1. Moqui Framework Version Conflicts (REQ-014 AC1)
+
+**Scenario**: Moqui Framework version mismatch between component dependencies or runtime vs. development environment.
+
+**Detection**:
+- Build failures due to incompatible API usage
+- Runtime exceptions from deprecated method calls
+- Component loading failures due to missing dependencies
+
+**Agent Response** (within 10 seconds, 90% compatibility resolution):
+```groovy
+// Agent provides migration guidance
+class MoquiVersionConflictResolution {
+    def detectVersionConflict(ComponentContext context) {
+        def runtimeVersion = context.moquiVersion      // e.g., "3.0.0"
+        def requiredVersion = context.componentRequires // e.g., "2.1.0"
+        
+        if (incompatible(runtimeVersion, requiredVersion)) {
+            return MigrationGuidance.builder()
+                .issue("Moqui ${runtimeVersion} incompatible with component requiring ${requiredVersion}")
+                .strategy("Update component.xml dependency version")
+                .alternativeAPIs(findCompatibleAPIs(runtimeVersion))
+                .migrationSteps(generateMigrationSteps(requiredVersion, runtimeVersion))
+                .estimatedEffort("2-4 hours for typical component")
+                .build()
+        }
+    }
+}
+```
+
+**Resolution Strategies**:
+1. **Update Dependencies**: Modify `component.xml` to match runtime version
+2. **API Migration**: Replace deprecated APIs with modern equivalents
+3. **Compatibility Layer**: Add adapter services for version bridging
+4. **Downgrade Option**: Provide guidance for downgrading Moqui if necessary
+
+#### 2. Component Dependency Conflicts (REQ-014 AC2)
+
+**Scenario**: Multiple components require conflicting versions of shared dependencies or have circular dependencies.
+
+**Detection**:
+- Gradle build failures from dependency resolution
+- ClassNotFoundException or NoSuchMethodError at runtime
+- Component load order issues
+
+**Agent Response** (within 5 seconds, 95% conflict resolution accuracy):
+```groovy
+class DependencyConflictResolver {
+    def resolveDependencyConflict(List<Component> components) {
+        def conflicts = detectConflicts(components)
+        
+        return conflicts.collect { conflict ->
+            ResolutionStrategy.builder()
+                .conflictingComponents(conflict.components)
+                .conflictingDependency(conflict.dependency)
+                .recommendedVersion(calculateOptimalVersion(conflict))
+                .resolutionSteps([
+                    "1. Update ${conflict.components[0]} to use ${recommendedVersion}",
+                    "2. Verify compatibility with integration tests",
+                    "3. Update myaddons.xml load order if needed"
+                ])
+                .alternativeOptions([
+                    "Use dependency exclusion in component.xml",
+                    "Create shaded/relocated dependency version",
+                    "Refactor to eliminate shared dependency"
+                ])
+                .build()
+        }
+    }
+}
+```
+
+**Resolution Strategies**:
+1. **Version Alignment**: Update all components to compatible dependency versions
+2. **Dependency Exclusion**: Exclude conflicting transitive dependencies
+3. **Load Order Adjustment**: Modify component load order in `myaddons.xml`
+4. **Dependency Shading**: Create isolated dependency versions
+
+#### 3. External System Integration Failures (REQ-014 AC3)
+
+**Scenario**: Positivity backend API unavailable, network failures, timeout issues, or API contract mismatches.
+
+**Detection**:
+- HTTP connection failures or timeouts
+- 500/502/503 error responses from positivity backend
+- Circuit breaker state changes to OPEN
+- JSON deserialization errors from API response changes
+
+**Agent Response** (within 3 seconds, 85% workaround success rate):
+```groovy
+class ExternalSystemFailureHandler {
+    def handlePositivityAPIFailure(IntegrationContext context) {
+        def failureType = classifyFailure(context.error)
+        
+        return FailureGuidance.builder()
+            .failureType(failureType)
+            .immediateAction(getImmediateAction(failureType))
+            .workarounds(generateWorkarounds(failureType, context))
+            .fallbackPattern(getFallbackPattern(context))
+            .recoverySteps(getRecoverySteps(failureType))
+            .build()
+    }
+    
+    private List<Workaround> generateWorkarounds(FailureType type, IntegrationContext context) {
+        switch (type) {
+            case NETWORK_TIMEOUT:
+                return [
+                    Workaround.INCREASE_TIMEOUT,
+                    Workaround.RETRY_WITH_BACKOFF,
+                    Workaround.USE_CACHED_DATA
+                ]
+            case API_UNAVAILABLE:
+                return [
+                    Workaround.CIRCUIT_BREAKER_FALLBACK,
+                    Workaround.QUEUE_FOR_LATER,
+                    Workaround.USE_STALE_CACHE_WITH_WARNING
+                ]
+            case CONTRACT_MISMATCH:
+                return [
+                    Workaround.USE_PREVIOUS_API_VERSION,
+                    Workaround.TRANSFORM_REQUEST_FORMAT,
+                    Workaround.CONTACT_BACKEND_TEAM
+                ]
+            default:
+                return [Workaround.MANUAL_INVESTIGATION]
+        }
+    }
+}
+```
+
+**Fallback Strategies** (REQ-010 AC3 - 80% functionality retention):
+1. **Cached Data Access**: Use stale cache with user warning
+2. **Read-Only Mode**: Disable write operations, enable read-only workflows
+3. **Queue Operations**: Queue write operations for later retry
+4. **Manual Intervention**: Provide clear error messages and manual workaround steps
+
+#### 4. Workspace-Level Agent Communication Failures (REQ-014 AC4)
+
+**Scenario**: durion workspace agent coordination fails, cross-project agents unavailable, or Requirements Decomposition Agent errors.
+
+**Detection**:
+- Agent registry reports workspace agents as unhealthy
+- Cross-project requests timeout or fail
+- Requirements decomposition guidance unavailable
+
+**Agent Response** (maintain 80% capability retention):
+```groovy
+class WorkspaceCommunicationFailureHandler {
+    def handleWorkspaceFailure(WorkspaceContext context) {
+        return LocalFallbackGuidance.builder()
+            .scenario("Workspace agent communication failure")
+            .localCapabilities(identifyLocalCapabilities())
+            .unavailableFeatures([
+                "Requirements decomposition across projects",
+                "Cross-project API contract validation",
+                "Workspace-level dependency analysis"
+            ])
+            .fallbackApproaches([
+                "Use local Moqui agent guidance without cross-project validation",
+                "Document assumptions for later workspace agent review",
+                "Focus on Moqui-local implementation patterns",
+                "Queue cross-project questions for manual resolution"
+            ])
+            .recoveryExpectation("Workspace agents should recover within 2 minutes")
+            .build()
+    }
+}
+```
+
+**Local Operation Mode**:
+- Continue providing Moqui-specific guidance without cross-project context
+- Document decisions that need workspace-level validation
+- Provide warnings when durion-positivity integration patterns cannot be validated
+- Queue non-critical cross-project requests for later processing
+
+#### 5. Database Connectivity Issues (REQ-014 AC5)
+
+**Scenario**: PostgreSQL/MySQL connection failures, connection pool exhaustion, or query timeouts.
+
+**Detection**:
+- JDBC connection exceptions
+- Connection pool timeout warnings
+- Database health check failures
+
+**Agent Response** (within 2 seconds, complete data protection):
+```groovy
+class DatabaseFailureHandler {
+    def handleDatabaseFailure(DatabaseContext context) {
+        def failureType = context.failureType
+        
+        if (failureType == DatabaseFailureType.CONNECTION_LOST) {
+            // Switch to read-only mode immediately
+            systemState.switchToReadOnlyMode()
+            
+            return ReadOnlyModeGuidance.builder()
+                .message("Database connectivity lost - switching to read-only mode")
+                .availableOperations([
+                    "Read cached agent responses",
+                    "Access knowledge base documentation",
+                    "View agent capabilities and status"
+                ])
+                .unavailableOperations([
+                    "Save new agent context",
+                    "Update cache entries",
+                    "Store collaboration state"
+                ])
+                .expectedRecovery("Automatic reconnection in 30 seconds")
+                .manualRecoverySteps([
+                    "1. Check database server status",
+                    "2. Verify network connectivity",
+                    "3. Review connection pool configuration",
+                    "4. Restart Moqui runtime if needed"
+                ])
+                .build()
+        }
+    }
+}
+```
+
+**Read-Only Mode Capabilities**:
+- Access cached agent responses (no new cache writes)
+- Provide guidance from knowledge base
+- Display agent capabilities and documentation
+- **Protect against data corruption** by preventing writes
+- Automatic reconnection attempts every 30 seconds
+
 ### Framework Integration Failures
 
-- **Positivity API Unavailability**: When durion-positivity-backend APIs are unavailable, agents provide graceful degradation strategies and local caching guidance
-- **Component Dependency Conflicts**: When Moqui component dependencies conflict, agents provide resolution strategies and alternative approaches
-- **Framework Version Mismatches**: When Moqui framework versions are incompatible, agents provide migration guidance and compatibility strategies
+- **Positivity API Unavailability**: When durion-positivity-backend APIs are unavailable, agents provide graceful degradation strategies and local caching guidance (detailed in REQ-014 AC3)
+- **Component Dependency Conflicts**: When Moqui component dependencies conflict, agents provide resolution strategies and alternative approaches (detailed in REQ-014 AC2)
+- **Framework Version Mismatches**: When Moqui framework versions are incompatible, agents provide migration guidance and compatibility strategies (detailed in REQ-014 AC1)
 - **Vue.js Integration Issues**: When Vue.js components fail to integrate with Moqui screens, agents provide interop guidance
 
 ### Domain Boundary Violations
@@ -863,6 +1499,380 @@ def "moquiFrameworkGuidanceProperty"(@ForAll("moquiRequests") MoquiRequest reque
 - Documentation remains synchronized with component evolution and API changes
 - Deployment and operational guidance supports both development and production Docker environments
 
+## Correctness Properties
+
+Formal correctness properties validate that the agent structure system meets all functional and non-functional requirements. These properties are validated using jqwik property-based testing framework.
+
+### Property 1: Response Time Bounds (REQ-009 AC1, All REQ-001 through REQ-008)
+
+```groovy
+@Property
+@Label("All agent responses complete within specified time bounds")
+boolean agentResponsesWithinTimeBounds(
+    @ForAll("agentTypes") AgentType agentType,
+    @ForAll("requestContexts") AgentRequest request
+) {
+    def agent = agentRegistry.getAgent(agentType)
+    def startTime = System.currentTimeMillis()
+    def response = agent.processRequest(request)
+    def duration = System.currentTimeMillis() - startTime
+    
+    def maxTime = getMaxResponseTime(agentType) // e.g., 2000ms for Moqui Framework Agent
+    return duration <= maxTime && response.status == ResponseStatus.SUCCESS
+}
+
+@Provide
+Arbitrary<AgentType> agentTypes() {
+    return Arbitraries.of(
+        AgentType.MOQUI_FRAMEWORK,    // 2 seconds max
+        AgentType.DOMAIN,              // 3 seconds max
+        AgentType.EXPERIENCE_LAYER,    // 3 seconds max
+        AgentType.SECURITY,            // 3 seconds max
+        AgentType.DEVOPS,              // 5 seconds max
+        AgentType.TESTING,             // 4 seconds max
+        AgentType.PERFORMANCE,         // 4 seconds max
+        AgentType.DOCUMENTATION        // 5 seconds max
+    )
+}
+```
+
+**Validates**: REQ-001 AC1-5 (2 sec), REQ-002 AC1-5 (2-3 sec), REQ-003 AC1-5 (2-3 sec), REQ-004 AC1-5 (1-3 sec), REQ-005 AC1-5 (2-4 sec), REQ-006 AC1-5 (2-5 sec), REQ-007 AC1-5 (3-5 sec), REQ-008 AC1-5 (2-4 sec), REQ-009 AC1 (< 3 sec for 99%)
+
+### Property 2: Accuracy Thresholds (All REQ-001 through REQ-008 Accuracy Targets)
+
+```groovy
+@Property
+@Label("Agent guidance meets minimum accuracy thresholds")
+boolean agentGuidanceAccuracyThresholds(
+    @ForAll("guidanceCategories") GuidanceCategory category,
+    @ForAll @IntRange(min = 1, max = 100) int sampleSize
+) {
+    def guidanceResults = (1..sampleSize).collect {
+        def request = generateRequest(category)
+        def guidance = getGuidance(request)
+        evaluateAccuracy(guidance, category)
+    }
+    
+    def averageAccuracy = guidanceResults.sum() / sampleSize
+    def minAccuracy = getMinAccuracy(category) // e.g., 0.95 for entity guidance
+    
+    return averageAccuracy >= minAccuracy
+}
+
+@Provide
+Arbitrary<GuidanceCategory> guidanceCategories() {
+    return Arbitraries.of(
+        new GuidanceCategory("moqui_entity", 0.95),          // REQ-001 AC1
+        new GuidanceCategory("service_implementation", 0.98), // REQ-001 AC2
+        new GuidanceCategory("screen_development", 0.92),     // REQ-001 AC3
+        new GuidanceCategory("work_execution", 0.95),         // REQ-002 AC1
+        new GuidanceCategory("inventory_control", 0.92),      // REQ-002 AC2
+        new GuidanceCategory("security", 0.99),               // REQ-004 AC1-5
+        new GuidanceCategory("testing", 0.90),                // REQ-005 AC1-5
+        new GuidanceCategory("deployment", 0.95),             // REQ-006 AC1-5
+        new GuidanceCategory("documentation", 0.95),          // REQ-007 AC1-5
+        new GuidanceCategory("performance", 0.95)             // REQ-008 AC1-5
+    )
+}
+```
+
+**Validates**: All accuracy targets from REQ-001 through REQ-008 (90-100% accuracy ranges)
+
+### Property 3: Integration Contract Compliance (REQ-003, REQ-014)
+
+```groovy
+@Property
+@Label("All durion-positivity integrations follow contract specifications")
+boolean integrationContractCompliance(
+    @ForAll("apiEndpoints") APIEndpoint endpoint,
+    @ForAll("requestPayloads") Map<String, Object> payload
+) {
+    def request = createIntegrationRequest(endpoint, payload)
+    def response = durionPositivityClient.call(request)
+    
+    return verifyContractCompliance(
+        response,
+        endpoint.contract,
+        [
+            "uses_durion_positivity_component": true,
+            "no_direct_backend_access": true,
+            "circuit_breaker_enabled": true,
+            "fallback_strategy_defined": true,
+            "error_handling_proper": true
+        ]
+    )
+}
+
+@Provide
+Arbitrary<APIEndpoint> apiEndpoints() {
+    return Arbitraries.of(
+        new APIEndpoint("/api/work-execution/orders", WorkOrderContract),
+        new APIEndpoint("/api/inventory/stock-levels", StockLevelContract),
+        new APIEndpoint("/api/products/pricing", PricingContract),
+        new APIEndpoint("/api/crm/customers", CustomerContract),
+        new APIEndpoint("/api/accounting/invoices", InvoiceContract)
+    )
+}
+```
+
+**Validates**: REQ-003 AC4 (95% positivity integration accuracy), REQ-014 AC3 (85% workaround success), Data Architecture Constraints (durion-positivity usage)
+
+### Property 4: Error Recovery Guarantees (REQ-010, REQ-013, REQ-014)
+
+```groovy
+@Property
+@Label("System recovers from failures within specified time bounds")
+boolean errorRecoveryWithinBounds(
+    @ForAll("failureScenarios") FailureScenario scenario
+) {
+    def system = createSystem()
+    
+    // Inject failure
+    scenario.injectFailure(system)
+    
+    // Measure recovery time
+    def startTime = System.currentTimeMillis()
+    def recovered = waitForRecovery(system, scenario.expectedRecoveryTime)
+    def recoveryTime = System.currentTimeMillis() - startTime
+    
+    return recovered && 
+           recoveryTime <= scenario.expectedRecoveryTime &&
+           system.dataIntegrity == 100.0 && // REQ-010 AC2
+           system.functionalityRetention >= scenario.minFunctionality
+}
+
+@Provide
+Arbitrary<FailureScenario> failureScenarios() {
+    return Arbitraries.of(
+        new FailureScenario("agent_failure", 30_000, 100),          // REQ-010 AC1
+        new FailureScenario("backend_unavailable", 2_000, 80),      // REQ-010 AC3, REQ-013 AC1
+        new FailureScenario("database_connectivity", 2_000, 80),    // REQ-014 AC5
+        new FailureScenario("workspace_communication", 5_000, 80),  // REQ-014 AC4
+        new FailureScenario("framework_version_conflict", 10_000, 90) // REQ-014 AC1
+    )
+}
+```
+
+**Validates**: REQ-010 AC1 (30-second failover), REQ-010 AC2 (100% data consistency), REQ-010 AC3 (80% functionality), REQ-010 AC5 (60-second anomaly detection), REQ-013 AC1-5, REQ-014 AC1-5
+
+### Property 5: Security Constraint Enforcement (REQ-004, REQ-011)
+
+```groovy
+@Property
+@Label("All security constraints are enforced correctly")
+boolean securityConstraintsEnforced(
+    @ForAll("securityOperations") SecurityOperation operation,
+    @ForAll("accessAttempts") AccessAttempt attempt
+) {
+    def result = executeSecurityOperation(operation, attempt)
+    
+    return verifySecurityEnforcement(
+        result,
+        [
+            "jwt_authentication_required": true,              // REQ-011 AC1
+            "role_based_authorization": true,                 // REQ-011 AC2
+            "tls_1_3_encryption": true,                       // REQ-011 AC3
+            "audit_trail_complete": true,                     // REQ-011 AC4
+            "unauthorized_access_detected": attempt.authorized, // REQ-011 AC5
+            "detection_time_ms": result.detectionTime <= 5000  // REQ-011 AC5
+        ]
+    )
+}
+
+@Provide
+Arbitrary<SecurityOperation> securityOperations() {
+    return Arbitraries.of(
+        SecurityOperation.AGENT_ACCESS,
+        SecurityOperation.DATA_ENCRYPTION,
+        SecurityOperation.API_AUTHENTICATION,
+        SecurityOperation.AUDIT_LOGGING,
+        SecurityOperation.THREAT_DETECTION
+    )
+}
+```
+
+**Validates**: REQ-004 AC1-5 (security implementation), REQ-011 AC1-5 (security requirements)
+
+### Property 6: Performance Scalability (REQ-009 AC2, AC5)
+
+```groovy
+@Property
+@Label("System scales to support concurrent users with acceptable degradation")
+boolean performanceScalability(
+    @ForAll @IntRange(min = 1, max = 50) int concurrentUsers,
+    @ForAll @IntRange(min = 100, max = 1000) int requestsPerHour
+) {
+    def system = createSystem()
+    def requests = generateConcurrentLoad(concurrentUsers, requestsPerHour)
+    
+    def startTime = System.currentTimeMillis()
+    def responses = system.processParallel(requests)
+    def duration = System.currentTimeMillis() - startTime
+    
+    def averageResponseTime = responses.collect { it.duration }.sum() / responses.size()
+    def baselineResponseTime = getBaselineResponseTime()
+    def degradation = (averageResponseTime - baselineResponseTime) / baselineResponseTime
+    
+    return degradation < 0.10 &&                              // REQ-009 AC2 (< 10%)
+           requestsPerHour <= 1000 &&                         // REQ-009 AC5
+           responses.every { it.status == ResponseStatus.SUCCESS }
+}
+```
+
+**Validates**: REQ-009 AC2 (50 concurrent users, < 10% degradation), REQ-009 AC5 (1000 requests/hour)
+
+### Property 7: Data Architecture Compliance
+
+```groovy
+@Property
+@Label("All data operations follow data architecture constraints")
+boolean dataArchitectureCompliance(
+    @ForAll("dataOperations") DataOperation operation
+) {
+    def constraints = [
+        "local_db_state_cache_only": !operation.isBusinessData(),
+        "business_data_from_backend": operation.isBusinessData() ? 
+            operation.usesPositivityBackend() : true,
+        "no_direct_backend_db_access": !operation.directlyAccessesBackendDB(),
+        "durion_positivity_component_used": operation.isBusinessData() ?
+            operation.usesDurionPositivityComponent() : true
+    ]
+    
+    return constraints.values().every { it == true }
+}
+
+@Provide
+Arbitrary<DataOperation> dataOperations() {
+    return Arbitraries.frequencyOf(
+        Tuple.of(7, Arbitraries.of(
+            DataOperation.CACHE_AGENT_RESPONSE,
+            DataOperation.STORE_AGENT_STATE,
+            DataOperation.SAVE_CONFIGURATION
+        )),
+        Tuple.of(3, Arbitraries.of(
+            DataOperation.FETCH_WORK_ORDER,
+            DataOperation.UPDATE_INVENTORY,
+            DataOperation.GET_CUSTOMER_DETAILS
+        ))
+    )
+}
+```
+
+**Validates**: Data Architecture Constraints (local DB for state/cache only, business data from positivity backend)
+
+### Property 8: Usability Targets (REQ-012)
+
+```groovy
+@Property
+@Label("Developer productivity and usability targets are met")
+boolean usabilityTargetsMet(
+    @ForAll("trainingDurations") int trainingMinutes,
+    @ForAll("guidanceRequests") GuidanceRequest request
+) {
+    def developer = simulateNewDeveloper(trainingMinutes)
+    def productivity = measureProductivity(developer)
+    
+    def guidance = provideGuidance(request)
+    def relevanceScore = calculateRelevance(guidance, request.context)
+    
+    def intentRecognized = recognizeIntent(request.naturalLanguageQuery)
+    
+    return (trainingMinutes == 120 ? productivity >= 0.80 : true) &&  // REQ-012 AC1
+           relevanceScore >= 0.95 &&                                   // REQ-012 AC2
+           intentRecognized.accuracy >= 0.90                           // REQ-012 AC3
+}
+```
+
+**Validates**: REQ-012 AC1 (80% productivity in 2 hours), REQ-012 AC2 (95% relevance), REQ-012 AC3 (90% intent recognition)
+
+## Requirements Traceability
+
+This section provides bidirectional traceability between requirements, design components, and test cases.
+
+### Requirements to Design Mapping
+
+| Requirement ID | Design Components | Section References |
+|---------------|-------------------|-------------------|
+| REQ-001 | Moqui Framework Agent, Architecture Agent | § Agent Specifications 1-2 |
+| REQ-002 | Domain Agent (5 specializations) | § Agent Specifications 3 |
+| REQ-003 | Experience Layer Agent, API Contract Agent | § Agent Specifications 4, 15 |
+| REQ-004 | Security Agent | § Agent Specifications 5, § Security Considerations |
+| REQ-005 | Testing Agent | § Agent Specifications 7, § Testing Strategy |
+| REQ-006 | DevOps Agent | § Agent Specifications 6, § Deployment Architecture |
+| REQ-007 | Documentation Agent | § Agent Specifications 9 |
+| REQ-008 | Performance Agent | § Agent Specifications 8, § Performance Optimization |
+| REQ-009 | Performance Optimization, Caching, Load Balancing | § Performance Targets, § Performance Optimization |
+| REQ-010 | High Availability, Disaster Recovery | § Deployment Architecture |
+| REQ-011 | Security Agent, Authentication, Encryption | § Security Considerations |
+| REQ-012 | Usability and Developer Experience | § Usability and Developer Experience |
+| REQ-013 | Error Handling, Recovery Mechanisms | § Error Handling |
+| REQ-014 | Integration Failure Patterns | § Error Handling > Integration Failure Patterns |
+
+### Requirements to Test Cases Mapping
+
+| Requirement ID | Test Case IDs | Property Tests | Location |
+|---------------|--------------|----------------|----------|
+| REQ-001 | TC-001, TC-002, TC-003 | Property 1, Property 2 | `.kiro/generated/tests/specs/MoquiFrameworkAgentSpec.groovy` |
+| REQ-002 | TC-004, TC-005, TC-006 | Property 1, Property 2 | `.kiro/generated/tests/specs/DomainAgentSpec.groovy` |
+| REQ-003 | TC-007, TC-008, TC-009 | Property 1, Property 3 | `.kiro/generated/tests/specs/ExperienceLayerAgentSpec.groovy` |
+| REQ-004 | TC-010, TC-011, TC-012 | Property 1, Property 5 | `.kiro/generated/tests/specs/SecurityAgentSpec.groovy` |
+| REQ-005 | TC-013, TC-014, TC-015 | Property 1, Property 2 | `.kiro/generated/tests/specs/TestingAgentSpec.groovy` |
+| REQ-006 | TC-016, TC-017, TC-018 | Property 1, Property 2 | `.kiro/generated/tests/specs/DevOpsAgentSpec.groovy` |
+| REQ-007 | TC-019, TC-020, TC-021 | Property 1, Property 2 | `.kiro/generated/tests/specs/DocumentationAgentSpec.groovy` |
+| REQ-008 | TC-022, TC-023, TC-024 | Property 1, Property 2 | `.kiro/generated/tests/specs/PerformanceAgentSpec.groovy` |
+| REQ-009 | TC-025, TC-026, TC-027 | Property 1, Property 6 | `.kiro/generated/tests/properties/AgentPerformanceProperties.groovy` |
+| REQ-010 | TC-028, TC-029, TC-030 | Property 4 | `.kiro/generated/tests/properties/ReliabilityProperties.groovy` |
+| REQ-011 | TC-031, TC-032, TC-033 | Property 5 | `.kiro/generated/tests/properties/SecurityProperties.groovy` |
+| REQ-012 | TC-034, TC-035, TC-036 | Property 8 | `.kiro/generated/tests/properties/UsabilityProperties.groovy` |
+| REQ-013 | TC-037, TC-038, TC-039 | Property 4 | `.kiro/generated/tests/properties/ErrorRecoveryProperties.groovy` |
+| REQ-014 | TC-040, TC-041, TC-042 | Property 3, Property 4 | `.kiro/generated/tests/properties/IntegrationFailureProperties.groovy` |
+
+### Acceptance Criteria Validation Checklist
+
+#### REQ-001: Moqui Framework Agent (5 acceptance criteria)
+- [x] AC1: Entity guidance in 2 seconds, 95% accuracy - **Property 1, Property 2**
+- [x] AC2: Service guidance in 2 seconds, 98% accuracy - **Property 1, Property 2**
+- [x] AC3: Screen guidance in 2 seconds, 92% accuracy - **Property 1, Property 2**
+- [x] AC4: Positivity integration in 3 seconds, 95% accuracy - **Property 1, Property 3**
+- [x] AC5: Architecture guidance in 2 seconds, 100% compliance - **Property 1, Property 2**
+
+#### REQ-002: Domain-Specific Agents (5 acceptance criteria)
+- [x] AC1: Work Execution guidance in 3 seconds, 95% accuracy - **Property 1, Property 2**
+- [x] AC2: Inventory guidance in 2 seconds, 92% accuracy - **Property 1, Property 2**
+- [x] AC3: Product/Pricing guidance in 3 seconds, 99% accuracy - **Property 1, Property 2**
+- [x] AC4: CRM guidance in 3 seconds, 97% accuracy - **Property 1, Property 2**
+- [x] AC5: Accounting guidance in 3 seconds, 98% accuracy - **Property 1, Property 2**
+
+#### REQ-003: Experience Layer (5 acceptance criteria)
+- [x] AC1: Cross-domain orchestration in 3 seconds, 90% accuracy - **Property 1, Property 2**
+- [x] AC2: Mobile guidance in 2 seconds, 95% responsiveness - **Property 1, Property 2**
+- [x] AC3: MCP integration in 3 seconds, 97% accuracy - **Property 1, Property 3**
+- [x] AC4: Positivity integration in 2 seconds, 95% accuracy - **Property 1, Property 3**
+- [x] AC5: User journey guidance in 3 seconds, 92% accuracy - **Property 1, Property 2**
+
+#### REQ-004 through REQ-014: (Additional 50 acceptance criteria)
+- [x] All covered by Properties 1-8 and design sections
+- [x] Full traceability maintained in Requirements to Test Cases Mapping table
+
+### Design Coverage Summary
+
+| Design Section | Requirements Covered | Completeness |
+|----------------|---------------------|--------------|
+| Agent Specifications | REQ-001 through REQ-008 | 100% |
+| Code Generation Structure | Cross-requirement | 100% |
+| Data Architecture Constraints | Cross-requirement | 100% |
+| Error Handling | REQ-013, REQ-014 | 100% |
+| Integration Failure Patterns | REQ-014 | 100% |
+| Testing Strategy | REQ-005 | 100% |
+| Correctness Properties | All requirements | 100% |
+| Performance Optimization | REQ-008, REQ-009 | 100% |
+| Performance Targets | REQ-009 | 100% |
+| Security Considerations | REQ-004, REQ-011 | 100% |
+| Deployment Architecture | REQ-006, REQ-010 | 100% |
+| Usability and Developer Experience | REQ-012 | 100% |
+
+**Overall Design Coverage**: 100% of all 14 requirements with 70 acceptance criteria
+
 ## Performance Optimization
 
 ### Caching Strategy
@@ -902,6 +1912,58 @@ def "moquiFrameworkGuidanceProperty"(@ForAll("moquiRequests") MoquiRequest reque
 - **SLA Violations**: Alerts for response time SLA breaches
 - **Error Rate Spikes**: Alerts for abnormal error rate increases in agent responses
 - **Resource Exhaustion**: Alerts for agent pool saturation or memory pressure
+
+### Performance Targets
+
+The agent structure system must meet the following performance targets as specified in REQ-009:
+
+#### Response Time Targets by Agent Type
+
+| Agent Type | Target Response Time | Acceptance Criteria | Requirement Reference |
+|-----------|---------------------|---------------------|---------------------|
+| Moqui Framework Agent | 2 seconds | Entity/Service/Screen guidance | REQ-001 AC1-5 |
+| Architecture Agent | 2 seconds | Component architecture guidance | REQ-001 AC1 |
+| Domain Agent | 2-3 seconds | Domain-specific guidance (5 domains) | REQ-002 AC1-5 |
+| Experience Layer Agent | 2-3 seconds | Orchestration and MCP integration | REQ-003 AC1-5 |
+| Security Agent | 1-3 seconds | Authentication and authorization | REQ-004 AC1-5 |
+| DevOps Agent | 2-5 seconds | Deployment and monitoring | REQ-006 AC1-5 |
+| Testing Agent | 2-4 seconds | Entity/Service/Screen testing | REQ-005 AC1-5 |
+| Performance Agent | 2-4 seconds | Optimization guidance | REQ-008 AC1-5 |
+| Documentation Agent | 3-5 seconds | API and entity documentation | REQ-007 AC1-5 |
+
+#### Accuracy and Success Rate Targets
+
+| Guidance Category | Accuracy Target | Requirement Reference |
+|------------------|----------------|---------------------|
+| Moqui Entity Guidance | 95-100% | REQ-001 AC1 |
+| Service Implementation | 98-100% | REQ-001 AC2 |
+| Screen Development | 92-97% | REQ-001 AC3 |
+| Domain-Specific Logic | 92-99% | REQ-002 AC1-5 |
+| Security Implementation | 99-100% | REQ-004 AC1-5 |
+| Testing Coverage | 90-100% | REQ-005 AC1-5 |
+| Deployment Success | 95-99% | REQ-006 AC1-5 |
+| Documentation Completeness | 95-100% | REQ-007 AC1-5 |
+| Performance Optimization | 95-98% | REQ-008 AC1-5 |
+
+#### System-Wide Performance Criteria
+
+| Metric | Target | Requirement Reference |
+|--------|--------|---------------------|
+| Query Response Time | < 3 seconds for 99% of requests | REQ-009 AC1 |
+| Cached Response Latency | < 100ms | REQ-009 AC4 |
+| Concurrent User Capacity | 50 developers with < 10% degradation | REQ-009 AC2 |
+| System Uptime | 99.9% during business hours (8 AM - 6 PM EST) | REQ-009 AC3 |
+| Throughput Capacity | 1000 guidance requests per hour | REQ-009 AC5 |
+
+#### Performance Monitoring Requirements
+
+The system must continuously monitor and report:
+
+1. **Response Time Percentiles**: P50, P95, P99 by agent type and request priority
+2. **Throughput Metrics**: Requests per second by agent category (Moqui vs Vue.js)
+3. **Error Rates**: Error percentage by agent type and Moqui component context
+4. **Resource Utilization**: Memory and CPU usage for agent pool instances
+5. **Cache Effectiveness**: Hit/miss ratios for agent response and knowledge base caches
 
 ## Security Considerations
 
@@ -964,9 +2026,43 @@ def "moquiFrameworkGuidanceProperty"(@ForAll("moquiRequests") MoquiRequest reque
 - **Data Replication**: Replicated storage for agent context and knowledge bases
 
 #### Disaster Recovery
-- **Backup Strategy**: Regular backups of agent configurations and Moqui component knowledge
-- **Recovery Procedures**: Automated recovery procedures for different agent failure scenarios
-- **RTO/RPO Targets**: Recovery Time Objective of 1 minute, Recovery Point Objective of 15 minutes
+
+Aligned with REQ-010 reliability requirements:
+
+- **Backup Strategy**: 
+  - Agent configurations and knowledge bases backed up every 4 hours (REQ-010 AC4)
+  - Data integrity guarantee of 99.99% for all backups
+  - Incremental backups between full backup cycles
+  
+- **Failover Strategy**:
+  - Automatic failover to backup agents within 30 seconds of detected failure (REQ-010 AC1)
+  - Health check polling interval of 5 seconds for failure detection
+  - Load balancer automatic routing to healthy agent instances
+  
+- **Data Consistency**:
+  - 100% data consistency across all agent interactions (REQ-010 AC2)
+  - Distributed transactions for multi-agent collaboration
+  - Event sourcing for critical agent decisions and guidance
+  
+- **Graceful Degradation**:
+  - 80% functionality maintained when positivity backend unavailable (REQ-010 AC3)
+  - Cached guidance and fallback patterns for common scenarios
+  - Read-only mode for documentation and knowledge base access
+  
+- **Anomaly Detection**:
+  - System anomaly detection within 60 seconds with 95% accuracy (REQ-010 AC5)
+  - Automated alerting for performance degradation, error rate spikes, resource exhaustion
+  - Predictive failure detection using historical patterns
+
+- **Recovery Procedures**: 
+  - Automated recovery procedures for agent service failures
+  - Manual runbooks for complex failure scenarios (database corruption, network partitions)
+  - Regular disaster recovery drills and validation
+
+- **RTO/RPO Targets**: 
+  - Recovery Time Objective (RTO) of 30 seconds for automatic failover
+  - Recovery Point Objective (RPO) of 4 hours for knowledge base restoration
+  - Critical configuration recovery within 1 minute
 
 ## Monitoring and Observability
 
@@ -1044,6 +2140,289 @@ def "moquiFrameworkGuidanceProperty"(@ForAll("moquiRequests") MoquiRequest reque
 - **Compatibility**: Guidance for MySQL-specific configuration and entity definitions
 - **Migration**: Guidance for database migration between PostgreSQL and MySQL
 - **Performance**: Guidance for MySQL-specific performance optimization
+
+## Usability and Developer Experience
+
+The agent structure system prioritizes developer productivity and ease of use as specified in REQ-012.
+
+### Training and Onboarding (REQ-012 AC1)
+
+**Target**: Enable new Moqui developers to achieve 80% productivity within 2 hours of initial training.
+
+#### Onboarding Workflow
+
+```yaml
+onboarding_process:
+  phase_1_introduction:
+    duration: 15 minutes
+    activities:
+      - "Overview of DETSMS architecture and five business domains"
+      - "Introduction to Moqui Framework and durion-positivity integration"
+      - "Tour of agent capabilities and collaboration features"
+      - "Setup verification: Java 11, Moqui runtime, IDE integration"
+    
+  phase_2_hands_on_basics:
+    duration: 30 minutes
+    activities:
+      - "Create first Moqui entity with Entity Agent guidance"
+      - "Implement simple service with Service Agent guidance"
+      - "Build basic screen with Screen Agent and Vue Agent guidance"
+      - "Write Spock test with Testing Agent guidance"
+    success_criteria:
+      - "Developer can create entity without external documentation"
+      - "Developer can implement service following best practices"
+      - "Developer understands durion-positivity integration pattern"
+    
+  phase_3_domain_context:
+    duration: 30 minutes
+    activities:
+      - "Explore one DETSMS domain (e.g., Work Execution)"
+      - "Understand domain boundaries and data access rules"
+      - "Practice API consumption through durion-positivity component"
+      - "Review domain-specific agent guidance"
+    success_criteria:
+      - "Developer can explain data architecture constraints"
+      - "Developer can use Domain Agent for business logic guidance"
+    
+  phase_4_advanced_patterns:
+    duration: 45 minutes
+    activities:
+      - "Multi-agent collaboration for complex features"
+      - "Performance optimization with Performance Agent"
+      - "Security implementation with Security Agent"
+      - "Deployment with DevOps Agent"
+    success_criteria:
+      - "Developer achieves 80% productivity on typical tasks"
+      - "Developer comfortable with agent collaboration patterns"
+      - "Developer can troubleshoot common integration issues"
+```
+
+#### Productivity Measurement
+
+Productivity tracked by measuring:
+- **Time to complete standard tasks** (entity creation, service implementation, screen development)
+- **Code quality metrics** (test coverage, pattern compliance, integration correctness)
+- **Self-sufficiency rate** (percentage of tasks completed without external help)
+- **Agent interaction effectiveness** (successful guidance applications vs. total requests)
+
+**Target**: Within 2 hours, developers should complete standard tasks in ≤120% of expert developer time.
+
+### Context-Aware Guidance (REQ-012 AC2)
+
+**Target**: Provide 95% relevance to current development tasks.
+
+#### Context Detection
+
+Agents automatically detect developer context from:
+
+1. **Active File Context**
+   - File type (Groovy service, XML entity, FTL screen, Vue component)
+   - Component location (durion-*, component://, directory structure)
+   - Domain affiliation (WorkExecution, Inventory, Product, CRM, Accounting)
+   - Existing code patterns and dependencies
+
+2. **Project Context**
+   - Active Moqui components and their dependencies
+   - Available durion-positivity APIs
+   - Current Moqui Framework version
+   - Database configuration (PostgreSQL vs. MySQL)
+
+3. **Task Context**
+   - Recent agent interactions and guidance received
+   - Active feature branch and related requirements
+   - Open files and navigation history
+   - Test execution results and error messages
+
+#### Relevance Scoring
+
+```groovy
+class ContextRelevanceScorer {
+    
+    def calculateRelevance(AgentGuidance guidance, DeveloperContext context) {
+        def score = 0.0
+        
+        // File type match (30% weight)
+        if (guidance.applicableFileTypes.contains(context.currentFile.type)) {
+            score += 0.30
+        }
+        
+        // Domain match (25% weight)
+        if (guidance.domain == context.currentDomain) {
+            score += 0.25
+        }
+        
+        // Pattern match (20% weight)
+        if (guidance.patterns.any { context.codebase.uses(it) }) {
+            score += 0.20
+        }
+        
+        // Recent task similarity (15% weight)
+        def taskSimilarity = calculateTaskSimilarity(guidance, context.recentTasks)
+        score += taskSimilarity * 0.15
+        
+        // Integration point match (10% weight)
+        if (guidance.integration Points.intersect(context.activeIntegrations)) {
+            score += 0.10
+        }
+        
+        return score // Target: ≥ 0.95 for presented guidance
+    }
+}
+```
+
+#### Adaptive Guidance Filtering
+
+- **High Relevance (≥ 0.95)**: Present immediately as primary guidance
+- **Medium Relevance (0.75-0.94)**: Present as secondary options with context explanation
+- **Low Relevance (< 0.75)**: Available on demand but not automatically suggested
+
+### Natural Language Query Support (REQ-012 AC3)
+
+**Target**: 90% intent recognition accuracy for natural language queries.
+
+#### Supported Query Patterns
+
+```yaml
+query_patterns:
+  entity_queries:
+    - "How do I create a WorkOrder entity?"
+    - "What fields should a ServiceRecord entity have?"
+    - "Show me entity relationship for Inventory domain"
+    intent_recognition: 95%
+    
+  service_queries:
+    - "How do I call the positivity backend for work orders?"
+    - "Create a service to update tire inventory"
+    - "What's the pattern for error handling in services?"
+    intent_recognition: 92%
+    
+  screen_queries:
+    - "Build a screen to display customer orders"
+    - "How do I add a Vue component to a Moqui screen?"
+    - "Create a responsive mobile layout for technician app"
+    intent_recognition: 90%
+    
+  integration_queries:
+    - "How do I authenticate with positivity backend?"
+    - "Show me the durion-positivity integration pattern"
+    - "Handle circuit breaker when backend is down"
+    intent_recognition: 88%
+    
+  testing_queries:
+    - "Write a Spock test for this service"
+    - "How do I test Vue components with Jest?"
+    - "Create property-based test for entity validation"
+    intent_recognition: 93%
+```
+
+#### Intent Recognition Pipeline
+
+1. **Query Preprocessing**: Tokenization, normalization, stop word removal
+2. **Pattern Matching**: Match against known query templates
+3. **Entity Extraction**: Extract Moqui entities, services, domains, technologies
+4. **Context Integration**: Combine with current developer context
+5. **Agent Selection**: Route to appropriate agent(s) based on intent
+6. **Confidence Scoring**: Score intent match confidence
+7. **Clarification**: Request clarification if confidence < 80%
+
+### Consistent User Interface Patterns (REQ-012 AC4)
+
+All agent interactions follow consistent patterns:
+
+#### Guidance Structure
+
+```markdown
+# [Agent Name] Guidance: [Task Description]
+
+## Quick Summary
+[One sentence summary of the guidance]
+
+## Step-by-Step Instructions
+1. [First step with code example if applicable]
+2. [Second step...]
+
+## Code Example
+```groovy
+// Complete, runnable code example
+```
+
+## Integration Points
+- durion-positivity API: [endpoint if applicable]
+- Related Moqui components: [component list]
+- Domain: [DETSMS domain]
+
+## Testing Guidance
+- Spock test template
+- Expected outcomes
+- Common pitfalls
+
+## Additional Resources
+- [Link to Moqui documentation]
+- [Link to durion-positivity API docs]
+```
+
+#### Interaction Patterns
+
+- **Consistent Command Structure**: `/agent [command] [options]`
+- **Predictable Response Format**: Always includes summary, steps, example, testing
+- **Progressive Disclosure**: Start with essentials, provide "Show More" for details
+- **Visual Consistency**: Same formatting, syntax highlighting, icon usage across all agents
+
+### Help Documentation Accessibility (REQ-012 AC5)
+
+**Target**: Comprehensive help accessible within 2 clicks from any interface.
+
+#### Help System Structure
+
+```
+Help Menu (1 click)
+├── Agent Capabilities Overview
+│   ├── Moqui Framework Agent → Guidance Examples (2 clicks)
+│   ├── Domain Agent → Domain-Specific Patterns (2 clicks)
+│   ├── Security Agent → Security Patterns (2 clicks)
+│   └── ... (all 13 agents)
+│
+├── Quick Start Guides
+│   ├── Creating Entities (2 clicks)
+│   ├── Implementing Services (2 clicks)
+│   ├── Building Screens (2 clicks)
+│   └── Testing Workflows (2 clicks)
+│
+├── Integration Patterns
+│   ├── durion-positivity Integration (2 clicks)
+│   ├── Data Architecture Rules (2 clicks)
+│   └── Error Handling Patterns (2 clicks)
+│
+└── Troubleshooting
+    ├── Common Errors → Solutions (2 clicks)
+    ├── Performance Issues → Optimization (2 clicks)
+    └── Integration Failures → Recovery (2 clicks)
+```
+
+#### Context-Sensitive Help
+
+- **F1 Key**: Context-sensitive help based on current file and cursor position
+- **Inline Help**: Hover tooltips for agent suggestions and code completion
+- **Error Help**: Click on error message to get agent guidance for resolution
+- **Search**: Full-text search across all agent documentation (1 click to results)
+
+### Developer Feedback Loop
+
+Continuous improvement through:
+
+1. **Guidance Rating**: Developers rate each guidance interaction (helpful/not helpful)
+2. **Usage Analytics**: Track which agents, patterns, and queries are most used
+3. **A/B Testing**: Test alternative guidance approaches and measure effectiveness
+4. **Feedback Integration**: Regularly update agent knowledge based on developer feedback
+
+### Success Metrics Dashboard
+
+Real-time dashboard showing:
+- **Average Time to Productivity**: Track against 2-hour target
+- **Guidance Relevance Score**: Track against 95% target
+- **Intent Recognition Accuracy**: Track against 90% target
+- **Help Accessibility**: Track average clicks to find help
+- **Developer Satisfaction**: Weekly NPS scores from developers
 
 ## Scalability Considerations
 

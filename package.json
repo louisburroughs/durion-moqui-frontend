@@ -1,0 +1,47 @@
+{
+  "name": "durion-moqui-frontend",
+  "version": "1.0.0",
+  "description": "Moqui Framework application with Vue.js 3 frontend",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^2.4.3",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "@babel/core": "^7.23.6",
+    "@babel/preset-env": "^7.23.6",
+    "babel-jest": "^29.7.0",
+    "vue-jest": "^5.0.0",
+    "@types/jest": "^29.5.8",
+    "typescript": "^5.3.3"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.vue$": "vue-jest",
+      "^.+\\.(js|jsx)$": "babel-jest",
+      "^.+\\.(ts|tsx)$": "babel-jest"
+    },
+    "testMatch": [
+      "**/.kiro/generated/tests/**/*.spec.(js|jsx|ts|tsx)",
+      "**/.kiro/generated/tests/**/*.test.(js|jsx|ts|tsx)",
+      "**/runtime/component/**/webapp/**/*.spec.(js|jsx|ts|tsx)",
+      "**/runtime/component/**/webapp/**/*.test.(js|jsx|ts|tsx)"
+    ],
+    "collectCoverageFrom": [
+      "**/.kiro/generated/agents/**/*.{js,ts,vue}",
+      "**/runtime/component/**/webapp/**/*.{js,ts,vue}",
+      "!**/node_modules/**"
+    ]
+  }
+}

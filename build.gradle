@@ -50,6 +50,10 @@ HttpsURLConnection.setDefaultHostnameVerifier { hostname, session -> true }
 
 defaultTasks 'build'
 
+// Apply plugins needed for generated agents
+apply plugin: 'java'
+apply plugin: 'groovy'
+
 def openSearchVersion = '2.4.0'
 def elasticSearchVersion = '7.10.2'
 
@@ -83,9 +87,117 @@ def getDefaultPropertyKeys() {
     defaultProperties
 }
 
+// ========== source sets for generated code ==========
+
+sourceSets {
+    generatedAgents {
+        groovy {
+            srcDirs = ['.kiro/generated/agents']
+        }
+        resources {
+            srcDirs = ['.kiro/generated/models', '.kiro/generated/config']
+        }
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+    }
+}
+
+test {
+    testClassesDirs += sourceSets.generatedAgents.output.classesDirs
+    classpath += sourceSets.generatedAgents.runtimeClasspath
+}
+
+// Add generated test source set
+sourceSets {
+    generatedTests {
+        groovy {
+            srcDirs = ['.kiro/generated/tests']
+        }
+        compileClasspath += main.compileClasspath + sourceSets.generatedAgents.output
+        runtimeClasspath += main.runtimeClasspath + sourceSets.generatedAgents.output
+    }
+}
+
+// Task to clean generated code for regeneration
+task cleanGenerated(type: Delete) {
+    delete fileTree(dir: '.kiro/generated', include: '**/*.groovy')
+    delete fileTree(dir: '.kiro/generated', include: '**/*.java')
+    delete fileTree(dir: '.kiro/generated', include: '**/*.class')
+    delete fileTree(dir: '.kiro/generated', include: '**/*.js')
+    delete fileTree(dir: '.kiro/generated', include: '**/*.ts')
+    delete fileTree(dir: '.kiro/generated', include: '**/*.vue')
+    delete 'coverage'
+    delete 'node_modules/.cache'
+}
+
+// ========== testing framework dependencies ==========
+
+dependencies {
+    // jqwik for property-based testing
+    testImplementation 'net.jqwik:jqwik:1.8.2'
+    testImplementation 'net.jqwik:jqwik-groovy:1.8.2'
+    
+    // Additional testing utilities for generated agents
+    testImplementation 'org.mockito:mockito-core:5.8.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
+    
+    // Generated agent dependencies inherit from framework
+    generatedAgentsImplementation project(':framework')
+    generatedTestsImplementation project(':framework')
+    generatedTestsImplementation sourceSets.generatedAgents.output
+}
+
+// ========== npm and jest integration ==========
+
+task npmInstall(type: Exec) {
+    description 'Install npm dependencies for Jest testing'
+    commandLine 'npm', 'install'
+    inputs.file 'package.json'
+    outputs.dir 'node_modules'
+}
+
+task jestTest(type: Exec) {
+    description 'Run Jest tests for Vue.js components'
+    dependsOn npmInstall
+    commandLine 'npm', 'test'
+    inputs.files fileTree(dir: '.kiro/generated/tests', include: '**/*.spec.js')
+    inputs.files fileTree(dir: '.kiro/generated/tests', include: '**/*.test.js')
+    inputs.files fileTree(dir: 'runtime/component', include: '**/webapp/**/*.spec.js')
+    inputs.files fileTree(dir: 'runtime/component', include: '**/webapp/**/*.test.js')
+}
+
+task jestTestCoverage(type: Exec) {
+    description 'Run Jest tests with coverage report'
+    dependsOn npmInstall
+    commandLine 'npm', 'run', 'test:coverage'
+}
+
+// Task to run Spock tests for generated agents
+task spockTest(type: Test) {
+    description 'Run Spock tests for generated agents'
+    testClassesDirs = sourceSets.generatedTests.output.classesDirs
+    classpath = sourceSets.generatedTests.runtimeClasspath
+    
+    useJUnitPlatform()
+    
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+    
+    reports {
+        html.required = true
+        junitXml.required = true
+    }
+}
+
+// Integrate Jest tests with main test task
+test.dependsOn jestTest
+test.dependsOn spockTest
+
 // ========== clean tasks ==========
 
-task clean(type: Delete) { delete file(warName); delete file(execTempDir); delete file('wartemp'); cleanVersionDetailFiles() }
+task cleanMoqui(type: Delete) { delete file(warName); delete file(execTempDir); delete file('wartemp'); cleanVersionDetailFiles() }
 task cleanTempDir(type: Delete) { delete file(execTempDir) }
 task cleanDb { doLast {
     if (!file(moquiRuntime).exists()) return

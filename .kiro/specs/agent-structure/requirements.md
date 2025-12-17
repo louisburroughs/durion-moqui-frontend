@@ -21,6 +21,13 @@ This requirements document follows EARS (Easy Approach to Requirements Syntax) p
 - **Guidance Accuracy**: Percentage of agent recommendations that result in successful implementation
 - **Integration Success Rate**: Percentage of successful durion-positivity-backend API integrations following agent guidance
 
+### Agent & Test Classes Location
+
+All agent framework implementation and test classes are located in the **`.kiro/generated/`** folder:
+
+- Agent implementations: `.kiro/generated/agents/src/main/java/`
+- Test classes: `.kiro/generated/agents/src/test/java/`
+
 ## Functional Requirements
 
 ### REQ-001: Moqui Framework Agent Specialization
