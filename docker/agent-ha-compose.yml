@@ -1,0 +1,165 @@
+version: '3.8'
+
+services:
+  # Primary Agent Instance
+  moqui-agents-primary:
+    build:
+      context: .
+      dockerfile: docker/simple/Dockerfile
+    container_name: moqui-agents-primary
+    environment:
+      - MOQUI_CONF=conf/MoquiProductionConf.xml
+      - AGENT_INSTANCE_ID=primary
+      - AGENT_CLUSTER_MODE=true
+      - AGENT_BACKUP_SCHEDULE=0 */4 * * *  # Every 4 hours
+      - REDIS_URL=redis://redis:6379
+      - DB_HOST=postgres
+      - DB_NAME=moqui
+      - DB_USER=moqui_user
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - agent_data_primary:/opt/moqui/runtime/agent-data
+    networks:
+      - agent_cluster
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/rest/s1/moqui/agents/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Secondary Agent Instance (Standby)
+  moqui-agents-secondary:
+    build:
+      context: .
+      dockerfile: docker/simple/Dockerfile
+    container_name: moqui-agents-secondary
+    environment:
+      - MOQUI_CONF=conf/MoquiProductionConf.xml
+      - AGENT_INSTANCE_ID=secondary
+      - AGENT_CLUSTER_MODE=true
+      - AGENT_STANDBY_MODE=true
+      - REDIS_URL=redis://redis:6379
+      - DB_HOST=postgres
+      - DB_NAME=moqui
+      - DB_USER=moqui_user
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - agent_data_secondary:/opt/moqui/runtime/agent-data
+    networks:
+      - agent_cluster
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/rest/s1/moqui/agents/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Load Balancer
+  nginx-lb:
+    image: nginx:alpine
+    container_name: agent-load-balancer
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/agent-lb.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - moqui-agents-primary
+      - moqui-agents-secondary
+    networks:
+      - agent_cluster
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Database
+  postgres:
+    image: postgres:13
+    container_name: moqui-agents-db
+    environment:
+      - POSTGRES_DB=moqui
+      - POSTGRES_USER=moqui_user
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/backup:/backup
+    networks:
+      - agent_cluster
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moqui_user -d moqui"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis for Agent Registry and Coordination
+  redis:
+    image: redis:7-alpine
+    container_name: moqui-agents-redis
+    volumes:
+      - redis_data:/data
+    networks:
+      - agent_cluster
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Backup Service
+  backup-service:
+    image: postgres:13
+    container_name: agent-backup-service
+    environment:
+      - PGPASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./docker/postgres/backup:/backup
+      - ./docker/scripts/backup.sh:/backup.sh:ro
+    networks:
+      - agent_cluster
+    command: >
+      sh -c "
+        echo '0 */4 * * * /backup.sh' | crontab - &&
+        crond -f
+      "
+    depends_on:
+      - postgres
+
+  # Failover Monitor
+  failover-monitor:
+    build:
+      context: .
+      dockerfile: docker/failover/Dockerfile
+    container_name: agent-failover-monitor
+    environment:
+      - PRIMARY_URL=http://moqui-agents-primary:8080
+      - SECONDARY_URL=http://moqui-agents-secondary:8080
+      - REDIS_URL=redis://redis:6379
+      - FAILOVER_TIMEOUT=30
+    networks:
+      - agent_cluster
+    depends_on:
+      - moqui-agents-primary
+      - moqui-agents-secondary
+      - redis
+
+volumes:
+  postgres_data:
+  redis_data:
+  agent_data_primary:
+  agent_data_secondary:
+
+networks:
+  agent_cluster:
+    driver: bridge

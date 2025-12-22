@@ -2,11 +2,76 @@
 
 ## Overview
 
-The Durion-Moqui-Frontend Agent Structure System is a comprehensive framework that provides specialized AI agents for Moqui Framework development, Vue.js 3 frontend implementation, testing, deployment, and operations. The system is designed to support the Durion Enterprise Tire Service Management System (DETSMS) with five primary business domains—Work Execution, Inventory Control, Product & Pricing, CRM, and Accounting—providing domain-specific guidance while maintaining consistency across all components.
+The Durion-Moqui-Frontend Agent Structure System is a comprehensive framework that provides specialized AI agents for Moqui Framework development, Vue.js 3 frontend implementation, testing, deployment, and operations. The system is designed to support the Durion Enterprise Tire Service Management System (DETSMS) across nine component domains—Work Execution (durion-workexec), Inventory Management (durion-inventory), Product Management (durion-product), Customer Relations (durion-crm), Accounting (durion-accounting), Common Services (durion-common), User Interface Theme (durion-theme), User Experience (durion-experience), and Integration Layer (durion-positivity)—providing domain-specific guidance while maintaining consistency across all components.
 
 The agent structure provides specialized AI assistants that support the unique characteristics of Moqui Framework development (entities, services, screens, transitions) and Vue.js 3 Composition API patterns while ensuring proper integration with durion-positivity-backend service APIs through the durion-positivity integration component.
 
 The design follows a modular, extensible architecture that allows for easy addition of new agents while ensuring seamless collaboration between existing agents. The system emphasizes practical guidance delivery, performance optimization, and production-ready patterns for enterprise Moqui applications with modern frontend integration.
+
+**Core Design Principles:**
+
+- **Story-Driven Development**: Automated detection and analysis of [STORY] issues from durion-moqui-frontend repository
+- **Component-Based Architecture**: Each of the 9 domains has dedicated GitHub repositories with domain-specific agents
+- **Automated Agent Building**: Component Issue Monitor (REQ-021) triggers domain-specific agent generation when stories appear in component repositories
+- **Parent-Child Issue Tracking**: Multi-component stories maintain parent-child relationships across repositories
+- **Frozen Agent Responsibilities**: All agents follow strict contracts with clear inputs, outputs, stop conditions, and escalation rules (REQ-017)
+- **GitHub-First Automation**: Webhook-driven issue detection with Redis-backed build queues and agent registry
+- **Performance-First**: All agent responses delivered within specified timeframes (2-5 seconds for 95% of requests)
+- **Security-by-Design**: JWT integration, secure API communication, and comprehensive access control
+- **Code Generation Standards**: All code generation uses Java 11 as target version for moqui-agents compatibility
+- **Agent Implementation Location**: All agent framework implementation classes located in `runtime/component/moqui-agents/src/main/java/`, test classes in `runtime/component/moqui-agents/src/test/java/`
+
+## Requirements Fulfillment Mapping
+
+This design directly fulfills the 21 requirements specified in requirements.md:
+
+### REQ-001: Moqui Framework Agent Specialization
+**Fulfillment**: Moqui Framework Agent provides specialized guidance for component development (entities, services, screens), business logic integration with durion-positivity-backend APIs, data persistence patterns, screen widget validation, and component dependency management within specified timeframes (1-5 seconds) with required accuracy (90-100%).
+
+### REQ-002: Domain-Specific Agent Expertise
+**Fulfillment**: Domain Agent specializations provide expertise for all 5 DETSMS business domains (Work Execution, Inventory Control, Product & Pricing, CRM, Accounting) with workflow guidance, pattern compliance, data consistency validation, and financial accuracy (92-99%) within specified timeframes (2-3 seconds).
+
+### REQ-003: Experience Layer Orchestration
+**Fulfillment**: Experience Layer Agent coordinates cross-domain workflows, mobile APIs, MCP integration, and complex workflows with proper error recovery and state management, achieving 90-100% compliance and accuracy within 2-3 seconds.
+
+### REQ-004: Security Agent Implementation
+**Fulfillment**: Security Agent implements comprehensive security patterns including authentication (JWT), entity-level security, service-level authorization, screen-level security, and secure API integration with 99-100% compliance within 1-3 seconds.
+
+### REQ-005: Testing Agent Capabilities
+**Fulfillment**: Testing Agent provides specialized testing guidance for entities, services, screens, workflows, and integrations using Moqui test framework, UI testing, and integration testing with 90-98% coverage within 2-4 seconds.
+
+### REQ-006: DevOps Agent Operations
+**Fulfillment**: DevOps Agent manages Moqui application deployment, environment-specific configuration, monitoring, clustering, load balancing, and troubleshooting with 90-100% accuracy within 2-5 seconds.
+
+### REQ-007: Documentation Agent Services
+**Fulfillment**: Documentation Agent maintains comprehensive documentation for entities, services, screens, APIs (OpenAPI specs), and ensures synchronization with component evolution with 90-100% completeness within 2-5 seconds.
+
+### REQ-008: Performance Agent Optimization
+**Fulfillment**: Performance Agent optimizes entities, services, screens, workflows, and provides performance monitoring with 20-35% average performance improvements and 100% metric coverage within 2-4 seconds.
+
+### REQ-009 through REQ-014: Non-Functional & Error Handling
+**Fulfillment**: System architecture ensures <3 second responses (99%), concurrent usage by 50 developers (<10% degradation), 99.9% uptime, automatic failover (<30 seconds), data consistency (100%), graceful degradation (80% functionality), and error recovery for all integration failure scenarios.
+
+### REQ-015: Agent Location Awareness
+**Fulfillment**: All agents use `pwd` command before executing system commands and verify directory context with 100% compliance and accuracy.
+
+### REQ-016: Agent Code Generation and Cleanup
+**Fulfillment**: Agent Builder cleans `.kiro/generated` directory before code generation, generates code in moqui-agents component under specified directories, preserves configuration files, handles directory conflicts, and coordinates with active builds (REQ-021) with 100% compliance.
+
+### REQ-017: Frozen Agent Responsibilities and Contracts
+**Fulfillment**: All agent classes implement frozen responsibilities with single explicit purpose, clear inputs/outputs with type specifications, defined stop conditions, contractual specifications for read/write permissions, maximum iteration counts with human escalation, context summarization rules, and formal change control with 95-100% compliance and enforcement.
+
+### REQ-018: Story Analysis and Component Issue Generation
+**Fulfillment**: Story Analysis Agent detects [STORY] issues in durion-moqui-frontend repository (100% detection within 5 minutes), interacts with Architecture Agent for component structure (98% accuracy within 10 seconds), determines appropriate component repository (95% accuracy), validates/falls back for templates (100% validation), generates component issues with all sections populated (95% completeness), establishes parent-child relationships (100% relationship establishment), maintains task lists with auto-check-off (95% synchronization), provides rollback capability (100% tracking), and updates routing logic within 1 hour (98% mapping accuracy).
+
+### REQ-019: GitHub API Integration
+**Fulfillment**: System implements secure GitHub API authentication (PAT/GitHub App, 100% security compliance), monitors rate limits with exponential backoff (100% compliance), uses webhooks for issue detection (100% reliability within 10 seconds), implements fallback polling (99% detection), handles all error responses with retry logic (100% coverage), detects timeouts and caches operations (100% preservation within 30 seconds), creates [ALERT] issues for 404 errors (100% delivery), and maintains transaction logs (100% logging).
+
+### REQ-020: Alert Management System
+**Fulfillment**: System creates [ALERT] GitHub issues (100% success within 30 seconds), assigns severity/category labels (100% accuracy), populates structured information (95% completeness), deduplicates alerts within 1 hour (100% accuracy), auto-assigns based on CODEOWNERS (90% accuracy), auto-resolves when conditions met (95% accuracy), and sends reminder comments after 24 hours (100% delivery).
+
+### REQ-021: Component Issue Monitor and Agent Builder Trigger
+**Fulfillment**: Component Issue Monitor Agent detects [STORY] issues in all 9 component repositories via webhooks (100% detection within 30 seconds), extracts component name and domain requirements from Appendix A (100% mapping), invokes Agent Builder with full context (95% build initiation within 2 minutes), verifies generated agent code (95% verification within 30 seconds), comments on triggering issue with build status (100% notification), creates [ALERT] for failures (100% alert creation), queues simultaneous builds in Redis with priority ordering (100% queue management, max 100 builds), checks for incremental updates using Architecture Agent change events (90% detection), cancels builds for closed issues (100% cancellation), and registers agents with Story Analysis Agent via 4-step process: Redis cache, message queue, `.kiro/agents/registry.json`, cache refresh (95% registration success).
 
 ## Architecture
 
@@ -14,11 +79,20 @@ The design follows a modular, extensible architecture that allows for easy addit
 
 ```mermaid
 graph TB
+    subgraph "Story Processing Layer (NEW)"
+        GHWEBHOOK[GitHub Webhooks]
+        SAA[Story Analysis Agent]
+        CIM[Component Issue Monitor Agent]
+        AB[Agent Builder]
+        AGREG[Agent Registry]
+    end
+    
     subgraph "Agent Framework Core"
         AR[Agent Registry]
         AM[Agent Manager]
         CC[Collaboration Controller]
         CM[Context Manager]
+        RQ[Redis Build Queue]
     end
     
     subgraph "Foundation Agents"
@@ -28,7 +102,7 @@ graph TB
     end
     
     subgraph "Implementation Agents"
-        DA[Domain Agent]
+        DA[Domain Agent - Dynamic]
         ELA[Experience Layer Agent]
         FE[Frontend Agent]
     end
@@ -49,14 +123,63 @@ graph TB
         DOC[Documentation Agent]
         INT[Integration Agent]
         API[API Contract Agent]
+        ALERT[Alert Manager]
+    end
+    
+    subgraph "GitHub Repositories"
+        FRONTEND[durion-moqui-frontend]
+        WORKEXEC[durion-workexec]
+        INVENTORY[durion-inventory]
+        PRODUCT[durion-product]
+        CRM[durion-crm]
+        ACCOUNTING[durion-accounting]
+        COMMON[durion-common]
+        THEME[durion-theme]
+        EXPERIENCE[durion-experience]
+        POSITIVITY[durion-positivity]
     end
     
     subgraph "External Integrations"
-        POS[Positivity Backend]
+        POS[Positivity Backend APIs]
         DOCKER[Docker]
         PSQL[PostgreSQL/MySQL]
         MON[Monitoring Tools]
+        REDIS[Redis Cache/Queue]
     end
+    
+    FRONTEND -->|[STORY] issue| GHWEBHOOK
+    GHWEBHOOK --> SAA
+    SAA --> AA
+    SAA --> FRONTEND
+    SAA --> WORKEXEC
+    SAA --> INVENTORY
+    SAA --> PRODUCT
+    SAA --> CRM
+    SAA --> ACCOUNTING
+    SAA --> COMMON
+    SAA --> THEME
+    SAA --> EXPERIENCE
+    SAA --> POSITIVITY
+    
+    WORKEXEC -->|[STORY] issue| CIM
+    INVENTORY -->|[STORY] issue| CIM
+    PRODUCT -->|[STORY] issue| CIM
+    CRM -->|[STORY] issue| CIM
+    ACCOUNTING -->|[STORY] issue| CIM
+    COMMON -->|[STORY] issue| CIM
+    THEME -->|[STORY] issue| CIM
+    EXPERIENCE -->|[STORY] issue| CIM
+    POSITIVITY -->|[STORY] issue| CIM
+    
+    CIM --> RQ
+    RQ --> AB
+    AB --> DA
+    AB --> AGREG
+    AGREG --> SAA
+    
+    CIM --> ALERT
+    SAA --> ALERT
+    ALERT --> FRONTEND
     
     AR --> AM
     AM --> CC
@@ -83,26 +206,68 @@ graph TB
     DEVOPS --> DOCKER
     DB --> PSQL
     PERF --> MON
+    RQ --> REDIS
+    AGREG --> REDIS
 ```
 
 ### Layered Architecture
 
-The system follows a layered architecture organized into six specialized tiers:
+The system follows a layered architecture organized into seven specialized tiers:
 
-1. **Agent Framework Core**: Registry, manager, collaboration controller, context manager
+0. **Story Processing Layer (NEW)**: GitHub webhook integration, story analysis, component issue generation, parent-child tracking, agent building automation
+1. **Agent Framework Core**: Registry, manager, collaboration controller, context manager, Redis build queue
 2. **Foundation Layer**: Moqui Framework, Architecture, and Vue.js expertise
-3. **Implementation Layer**: Domain, Experience Layer, and Frontend implementation
+3. **Implementation Layer**: Domain (dynamically generated), Experience Layer, and Frontend implementation
 4. **Infrastructure Layer**: Security, DevOps, and Database management
 5. **Quality Assurance Layer**: Testing, Performance, and Pair Programming
-6. **Support Layer**: Documentation, Integration, and API Contract management
+6. **Support Layer**: Documentation, Integration, API Contract management, Alert management
 
 ### Agent Collaboration Model
 
-Agents operate in three collaboration modes:
+Agents operate in four collaboration modes:
 
 1. **Independent Mode**: Single agent provides specialized guidance
 2. **Collaborative Mode**: Multiple agents work together on complex tasks
 3. **Pair Programming Mode**: Primary agent paired with navigator for quality assurance
+4. **Story-Driven Mode (NEW)**: Automated story detection, analysis, decomposition, and agent building triggered by GitHub webhooks
+
+### Story Processing Workflow (REQ-018, REQ-021)
+
+```mermaid
+sequenceDiagram
+    participant DEV as Developer
+    participant FRONTEND as durion-moqui-frontend
+    participant WEBHOOK as GitHub Webhook
+    participant SAA as Story Analysis Agent
+    participant AA as Architecture Agent
+    participant COMP as Component Repo
+    participant CIM as Component Issue Monitor
+    participant QUEUE as Redis Build Queue
+    participant AB as Agent Builder
+    participant AGREG as Agent Registry
+    
+    DEV->>FRONTEND: Create [STORY] issue
+    FRONTEND->>WEBHOOK: issue.opened event
+    WEBHOOK->>SAA: Trigger story analysis
+    SAA->>AA: Get component structure
+    AA->>SAA: Return entities, services, screens, dependencies
+    SAA->>SAA: Determine component(s) from domain keywords
+    SAA->>SAA: Validate template (component → parent → alert)
+    SAA->>COMP: Create child [STORY] issue
+    SAA->>FRONTEND: Update parent with task list
+    
+    COMP->>WEBHOOK: issue.opened event with [STORY]
+    WEBHOOK->>CIM: Trigger build monitoring
+    CIM->>CIM: Extract component name from repo
+    CIM->>QUEUE: Add build request (priority ordered)
+    QUEUE->>AB: Process build request
+    AB->>AB: Clean .kiro/generated (preserve active)
+    AB->>AB: Generate domain-specific agent code
+    AB->>CIM: Build complete notification
+    CIM->>CIM: Verify agent in .kiro/generated/<component>/
+    CIM->>AGREG: Register agent (Redis + manifest + event)
+    AGREG->>SAA: Refresh agent cache
+    CIM->>COMP: Comment on issue (build status, agent path)
 
 ## Components and Interfaces
 
@@ -191,30 +356,81 @@ interface PairNavigatorAgent extends Agent {
 
 ```yaml
 MoquiAgentHierarchy:
+  story_processing_layer:      # NEW
+    - story_analysis_agent      # REQ-018
+    - component_issue_monitor   # REQ-021
+    - alert_management_agent    # REQ-020
+    - agent_builder_coordinator
+    
   foundation_layer:
-    - moqui_framework_agent
-    - architecture_agent
+    - moqui_framework_agent     # REQ-001
+    - architecture_agent        # REQ-001
     - vue_agent
     
   implementation_layer:
-    - domain_agent
-    - experience_layer_agent
+    - domain_agent              # REQ-002 (dynamically generated per component)
+    - experience_layer_agent    # REQ-003
     - frontend_agent
     
   infrastructure_layer:
-    - security_agent
-    - devops_agent
+    - security_agent            # REQ-004
+    - devops_agent             # REQ-006
     - database_agent
     
   quality_assurance_layer:
-    - testing_agent
-    - performance_agent
+    - testing_agent            # REQ-005
+    - performance_agent        # REQ-008
     - pair_navigator_agent
     
   support_layer:
-    - documentation_agent
+    - documentation_agent      # REQ-007
     - integration_agent
     - api_contract_agent
+    
+  infrastructure_requirements:  # NEW
+    redis:
+      purpose: "Build queue management and agent registry"
+      data_structures:
+        build_queue: "Priority-ordered queue (max 100 items)"
+        agent_registry: "Metadata cache for domain-specific agents"
+        webhook_events: "Audit log of all webhook events"
+      persistence: "Redis persistence (AOF + RDB)"
+      ttl_policies:
+        build_queue: "7 days"
+        agent_registry: "30 days"
+        webhook_events: "90 days"
+    
+    github_webhooks:
+      endpoint: "https://<agent-server-domain>/api/webhooks/github/story-monitor"
+      authentication: "HMAC-SHA256 with GITHUB_WEBHOOK_SECRET"
+      repositories:
+        - "louisburroughs/durion-moqui-frontend"
+        - "louisburroughs/durion-workexec"
+        - "louisburroughs/durion-inventory"
+        - "louisburroughs/durion-product"
+        - "louisburroughs/durion-crm"
+        - "louisburroughs/durion-accounting"
+        - "louisburroughs/durion-common"
+        - "louisburroughs/durion-theme"
+        - "louisburroughs/durion-experience"
+        - "louisburroughs/durion-positivity"
+      events: ["issues.opened", "issues.labeled", "issues.closed", "issues.reopened"]
+      
+    github_api:
+      authentication: "Personal Access Token (PAT) or GitHub App"
+      rate_limiting: "Monitor X-RateLimit headers, exponential backoff"
+      retry_policy: "Max 3 retries with exponential backoff (initial 5s, max 60s)"
+      
+    agent_registry_manifest:
+      location: ".kiro/agents/registry.json"
+      schema:
+        component: "string"
+        agent_path: "string"
+        capabilities: "array<string>"
+        generation_timestamp: "ISO 8601"
+        architecture_hash: "SHA-256"
+        last_update: "ISO 8601"
+        status: "enum[active, building, failed, deprecated]"
 ```
 
 ### Agent Specifications
@@ -391,6 +607,107 @@ MoquiAgentHierarchy:
 - Coordinates with workspace-level agents for cross-project documentation
 - Collaborates with Experience Layer Agent for API documentation
 
+#### 10. Story Analysis Agent (NEW - REQ-018)
+
+**Purpose**: Automates detection, analysis, and decomposition of [STORY] issues from durion-moqui-frontend into component-specific issues across 9 domain repositories
+
+**Capabilities**:
+
+- **Webhook-Based Issue Detection**: Monitors durion-moqui-frontend repository for [STORY] issues via GitHub webhooks (100% detection within 5 minutes)
+- **Architecture Integration**: Interacts with Architecture Agent to obtain current component structure (entities, services, screens, integration points, dependencies) with 98% accuracy within 10 seconds
+- **Component Routing**: Determines appropriate component repository based on domain keywords from Appendix A with 95% accuracy
+- **Template Management**: Validates template existence at component level, falls back to parent template, or creates [ALERT] issues for missing templates with 100% validation compliance
+- **Issue Generation**: Creates child [STORY] issues in component repositories with all template sections populated (Actor, Trigger, Main Flow, Alternate/Error Flows, Business Rules, Data Requirements, Acceptance Criteria, Notes for Agents, Classification) with 95% completeness
+- **Parent-Child Tracking**: Establishes parent-child relationships by adding parent URL reference, updating parent with task list, and adding `parent-story: <issue-number>` labels with 100% relationship establishment
+- **Task List Synchronization**: Maintains GitHub task lists in parent issues that auto-check when child issues close with 95% synchronization accuracy
+- **Cross-Component Coordination**: Consults Architecture Agent for cross-component dependencies and creates coordinated issues in all relevant repositories with 95% coordination accuracy
+- **Rollback Capability**: Maintains audit records of all parent-child relationships and provides rollback for orphaned child issues if parent is closed/cancelled with 100% tracking
+- **Dynamic Routing Updates**: Automatically updates component mapping and routing logic within 1 hour when Architecture Agent detects component changes with 98% mapping accuracy
+
+**Integration Points**:
+
+- Architecture Agent (REQ-001): Component structure queries
+- GitHub API Integration (REQ-019): Webhook processing, issue creation, task list management
+- Alert Management System (REQ-020): [ALERT] issue creation for missing templates
+- Component Issue Monitor (REQ-021): Agent registry refresh coordination
+
+**Performance Requirements**:
+- Story detection: within 5 minutes
+- Architecture queries: within 10 seconds
+- Component identification: 95% accuracy
+- Template validation: 100% compliance
+- Issue generation: 95% completeness
+- Parent-child establishment: 100% accuracy
+- Routing updates: within 1 hour
+
+#### 11. Component Issue Monitor Agent (NEW - REQ-021)
+
+**Purpose**: Monitors component repositories for new [STORY] issues and triggers automated domain-specific agent building
+
+**Capabilities**:
+
+- **Multi-Repository Webhook Monitoring**: Detects [STORY] issues in all 9 component repositories (durion-workexec, durion-inventory, durion-product, durion-crm, durion-accounting, durion-common, durion-theme, durion-experience, durion-positivity) via GitHub webhooks with 100% detection within 30 seconds
+- **Component Name Extraction**: Parses repository names and extracts component identifiers with 100% mapping accuracy
+- **Domain Requirements Mapping**: Determines domain-specific agent requirements from Appendix A component mappings with 100% accuracy
+- **Agent Builder Invocation**: Triggers Agent Builder (REQ-016) with complete context (component name, domain keywords, Architecture Agent context, frozen agent contract template, story issue URL) within 2 minutes with 95% build initiation success
+- **Build Verification**: Verifies generated agent code exists in `.kiro/generated/<component-name>-agent/` and passes compilation checks within 30 seconds with 95% verification success
+- **Build Status Notifications**: Comments on triggering [STORY] issue with build status, agent location path, agent capabilities summary, and estimated analysis completion time with 100% notification delivery
+- **Build Failure Alerting**: Creates [ALERT] issues in component repository with build logs, error details, and remediation steps for build failures with 100% alert creation
+- **Build Queue Management**: Uses Redis-backed persistent queue with priority ordering (critical > high > medium > low), maximum queue size of 100, overflow alerting, and persistence across system restarts with 100% queue management
+- **Incremental Update Detection**: Subscribes to Architecture Agent change events, compares generation timestamps, analyzes component structure hashes, and triggers updates when structural changes exceed 10% threshold with 90% detection accuracy
+- **Webhook Event Management**: Implements exponential backoff for failed webhook processing (initial 5s, max 60s, max 5 retries) and logs all events for audit with 100% retry compliance
+- **Build Cancellation**: Cancels pending builds and cleans up partial artifacts when [STORY] issues are closed before completion with 100% cancellation handling
+- **Agent Registration**: Registers generated agents with Story Analysis Agent via 4-step process: (a) Redis cache entry with metadata, (b) internal message queue event, (c) `.kiro/agents/registry.json` manifest update, (d) Story Analysis Agent cache refresh with 95% registration success
+
+**Integration Points**:
+
+- Agent Builder (REQ-016): Build invocation and coordination
+- Architecture Agent (REQ-001): Component structure queries for incremental updates
+- Story Analysis Agent (REQ-018): Agent registry and cache refresh
+- GitHub API Integration (REQ-019): Webhook processing and issue commenting
+- Alert Management System (REQ-020): Build failure alerts
+- Redis: Build queue and agent registry cache
+
+**Performance Requirements**:
+- Story detection: within 30 seconds
+- Build initiation: within 2 minutes (95% success)
+- Build verification: within 30 seconds (95% success)
+- Notification delivery: 100% completion
+- Queue management: 100% reliability
+- Update detection: 90% accuracy
+- Registration success: 95% completion
+
+#### 12. Alert Management Agent (NEW - REQ-020)
+
+**Purpose**: Creates and manages automated alerts as GitHub issues for system notifications and error conditions
+
+**Capabilities**:
+
+- **Alert Issue Creation**: Creates GitHub issues in durion-moqui-frontend repository with [ALERT] title prefix and concise description within 30 seconds with 100% success
+- **Severity Labeling**: Automatically assigns severity labels (priority: critical, priority: high, priority: medium, priority: low) based on alert type with 100% accuracy
+- **Category Labeling**: Applies category labels (type: alert, automated, component: <component-name>, api-error, template-missing, rate-limit, configuration-error) with 100% accuracy
+- **Structured Content**: Populates issue body with timestamp (ISO 8601), alert type, affected component/service, detailed description, context data (request/response, stack trace), suggested remediation steps, and related issue/PR links with 95% completeness
+- **Alert Deduplication**: Updates existing alert issues within 1-hour window with occurrence count and timestamps rather than creating duplicates with 100% deduplication accuracy
+- **Auto-Assignment**: Adds assignees for critical alerts (missing templates, authentication failures, repeated API errors) based on CODEOWNERS file with 90% assignment accuracy
+- **Auto-Resolution**: Automatically comments on alert issues with resolution confirmation and closes issue when conditions are met (template added, connectivity restored) with 95% auto-resolution accuracy
+- **Escalation Reminders**: Adds reminder comments with escalation notice to alert issues open >24 hours without activity with 100% reminder delivery
+
+**Integration Points**:
+
+- GitHub API Integration (REQ-019): Issue creation, labeling, commenting, closure
+- Story Analysis Agent (REQ-018): Template missing alerts
+- Component Issue Monitor (REQ-021): Build failure alerts
+- CODEOWNERS files: Auto-assignment based on component ownership
+
+**Performance Requirements**:
+- Alert creation: within 30 seconds (100% success)
+- Label accuracy: 100%
+- Content completeness: 95%
+- Deduplication accuracy: 100%
+- Auto-assignment: 90% accuracy
+- Auto-resolution: 95% accuracy
+- Reminder delivery: 100%
+
 ## Code Generation Structure
 
 All agent implementations, test classes, and generated artifacts are organized within the `.kiro/generated/` directory to maintain clear separation from application code and support automated code generation workflows.
@@ -418,11 +735,31 @@ moqui_example/
 │   │   │   │   ├── TestingAgentImpl.groovy
 │   │   │   │   ├── PerformanceAgentImpl.groovy
 │   │   │   │   └── PairNavigatorAgentImpl.groovy
-│   │   │   └── support/
-│   │   │       ├── DocumentationAgentImpl.groovy
-│   │   │       ├── IntegrationAgentImpl.groovy
-│   │   │       └── APIContractAgentImpl.groovy
-│   │   ├── tests/
+│   │   │   ├── support/
+│   │   │   │   ├── DocumentationAgentImpl.groovy
+│   │   │   │   ├── IntegrationAgentImpl.groovy
+│   │   │   │   └── APIContractAgentImpl.groovy
+│   │   │   └── story_processing/      # NEW
+│   │   │       ├── StoryAnalysisAgentImpl.groovy
+│   │   │       ├── ComponentIssueMonitorImpl.groovy
+│   │   │       ├── AlertManagementAgentImpl.groovy
+│   │   │       └── AgentBuilderCoordinator.groovy
+│   │   ├── domain_agents/          # NEW - Dynamic agents per component
+│   │   │   ├── durion-workexec/
+│   │   │   │   ├── WorkExecDomainAgent.groovy
+│   │   │   │   └── WorkExecAgentConfig.json
+│   │   │   ├── durion-inventory/
+│   │   │   │   ├── InventoryDomainAgent.groovy
+│   │   │   │   └── InventoryAgentConfig.json
+│   │   │   ├── durion-product/
+│   │   │   ├── durion-crm/
+│   │   │   ├── durion-accounting/
+│   │   │   ├── durion-common/
+│   │   │   ├── durion-theme/
+│   │   │   ├── durion-experience/
+│   │   │   └── durion-positivity/
+│   │   ├── registry.json            # NEW - Agent discovery manifest
+│   │   └── tests/
 │   │   │   ├── specs/
 │   │   │   │   ├── MoquiFrameworkAgentSpec.groovy      # Spock specifications
 │   │   │   │   ├── DomainAgentSpec.groovy
@@ -2494,3 +2831,9 @@ Real-time dashboard showing:
 - **AI/ML Integration**: Integration with machine learning for intelligent pattern recommendations
 - **MCP Server Integration**: Enhanced Model Context Protocol server capabilities
 - **Edge Computing**: Edge deployment capabilities for distributed development teams
+
+
+**Document Version**: 3.0  
+**Last Updated**: [Current Date]  
+**Next Review Date**: [30 days from last update]  
+**Document Status**: Approved

@@ -13,4 +13,5 @@
     <component name="durion-common" group="louisburroughs" version="1" branch="main"/>
     <component name="durion-accounting" group="louisburroughs" version="1" branch="main"/>
     <component name="durion-positivity" group="louisburroughs" version="1" branch="main"/>
+    <component name="moqui-agents" group="louisburroughs" version="1" branch="main"/>
 </addons>
