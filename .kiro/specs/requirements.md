@@ -19,6 +19,14 @@ The Durion Enterprise Tire Service Management System (DETSMS) is a comprehensive
 - **Mechanic**: User role responsible for executing work orders and updating job status
 - **Shop Manager**: User role responsible for business operations and system administration
 
+### Frontend Agent Orchestration Awareness
+
+- The Frontend Agent SHALL treat the durion workspace repository as the source of truth for cross-project story sequencing and SHALL consult the following documents before selecting work:
+	- .github/orchestration/story-sequence.md (global story ordering and dependency classifications)
+	- .github/orchestration/frontend-coordination.md (frontend-ready, blocked, and parallel stories)
+- The Frontend Agent SHALL respect Backend-First, Frontend-First, and Parallel story classifications defined in story-sequence.md and SHALL avoid starting stories marked as blocked unless an explicit stub strategy is documented.
+- The Frontend Agent SHALL use coordination information from frontend-coordination.md to choose DETSMS features and screens that can be implemented without requiring backend stubs whenever possible.
+
 ## Requirements
 
 ### Requirement 1
@@ -116,6 +124,20 @@ The Durion Enterprise Tire Service Management System (DETSMS) is a comprehensive
 3. WHEN a required API does not exist in Positivity Backend THEN the DETSMS SHALL create specifications for missing APIs
 4. WHEN integrating with Positivity Backend THEN the DETSMS SHALL use JWT-based authentication for all API communications
 5. WHEN handling cross-domain communication THEN the DETSMS SHALL use durion-positivity experience API patterns
+
+### Requirement 11
+
+**User Story:** As a frontend agent, I want clear orchestration guidance from the workspace, so that I can select DETSMS frontend stories that are ready to implement without creating unnecessary backend stubs.
+
+**Design Reference:** Workspace Story Orchestration Integration in [moqui_example/.kiro/specs/design.md](moqui_example/.kiro/specs/design.md#workspace-story-orchestration-integration).
+
+#### Acceptance Criteria
+
+1. WHEN the Frontend Agent plans work for a sprint THEN it SHALL read .github/orchestration/story-sequence.md and .github/orchestration/frontend-coordination.md from the durion workspace AND identify all frontend stories classified as ready or parallel AND SHALL prioritize those over stories marked as blocked by backend work
+2. WHEN a DETSMS frontend story depends on a Backend-First story in durion-positivity-backend THEN the Frontend Agent SHALL NOT begin implementation unless frontend-coordination.md explicitly allows a stub-based approach AND provides constraints for that stub
+3. WHEN frontend-coordination.md indicates that a previously blocked story is now unblocked (because required backend work is complete) THEN the Frontend Agent SHALL treat that story as eligible for implementation in the next planning cycle
+4. WHEN implementing screens, flows, or components for a Parallel story THEN the Frontend Agent SHALL follow the API contracts and payload examples referenced from the orchestration documents AND SHALL avoid making assumptions that conflict with the documented contracts
+5. WHEN operating in a silo THEN the Frontend Agent SHALL rely solely on the orchestration documents and story descriptions (including Notes for Agents) for coordination and SHALL NOT assume out-of-band communication with backend teams
 
 ### Requirement 9
 

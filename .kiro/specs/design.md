@@ -56,6 +56,31 @@ The system is organized into five vertical domains, each owning their complete s
 - **API Endpoints**: REST endpoints for UI, Mobile, and MCP integration
 - **Cross-Domain Coordination**: Uses durion-positivity for inter-domain communication
 
+### Workspace Story Orchestration Integration
+
+The DETSMS frontend participates in the workspace-level story orchestration system defined in the durion workspace while remaining siloed from backend implementation details. Frontend agents and automated tooling MUST treat the workspace orchestration documents as the authoritative source of truth for which stories are ready, blocked, or parallel from a UI perspective.
+
+#### Orchestration Artifacts Consumed
+
+- `durion/.github/orchestration/story-sequence.md`: Global ordering of [STORY] issues, including classification as Backend-First, Frontend-First, or Parallel and their dependency graph.
+- `durion/.github/orchestration/frontend-coordination.md`: Frontend-centric projection that lists DETSMS stories by readiness state (Ready, Blocked, Parallel) and records any explicitly allowed stub strategies.
+
+DETMS frontend agents SHALL read these documents before selecting work and SHALL NOT infer readiness or dependencies directly from backend repositories.
+
+#### Frontend Planning and Execution Rules
+
+1. **Story Selection**  
+    - Prefer stories marked as Ready in `frontend-coordination.md`, ordered according to the global sequence in `story-sequence.md`.
+    - Only consider Blocked stories when the orchestration documents explicitly permit frontend-first stubs and describe the contract expectations.
+
+2. **Parallel Stories**  
+    - For stories classified as Parallel, design UI flows, screens, and Vue components against the API shapes and contracts documented in the orchestration artifacts, without requiring backend completion.
+    - Preserve clear boundaries so that when backend implementations land, only wiring and configuration changes are required.
+
+3. **Siloed Operation**  
+    - The frontend operates strictly from the orchestration artifacts and story metadata (including "Notes for Agents" in issues) and does not rely on direct coordination with backend agents.
+    - Any ambiguity or missing information identified while implementing a story MUST be fed back as comments on the corresponding [STORY] issue, allowing the workspace orchestration system to adjust sequencing or contracts.
+
 ## Components and Interfaces
 
 ### Core Components

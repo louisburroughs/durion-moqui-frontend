@@ -630,6 +630,61 @@
 - [x] Validate production readiness
 - [x] Ask user for deployment approval
 
+## Phase 9: Frontend Story Orchestration Integration (Requirement 11)
+
+### Task 9.1: Refresh Orchestration Context for DETSMS Frontend Agents
+- [ ] Ensure DETSMS frontend agents consistently read durion workspace orchestration artifacts before planning work:
+  - durion/.github/orchestration/story-sequence.md (global ordering and classification)
+  - durion/.github/orchestration/frontend-coordination.md (Ready, Blocked, Parallel stories)
+- [ ] Verify agents check timestamps on orchestration documents and, when data is stale, request an orchestration refresh from the workspace (via issues, not direct code changes).
+- **Location**: moqui_example/.kiro/specs/requirements.md (Requirement 11), moqui_example/.kiro/specs/design.md (Workspace Story Orchestration Integration), moqui_example/.kiro/specs/agent-structure/task.md (DETSMS Frontend Agent Orchestrated Task Plan)
+- **Requirements**: Requirement 11 (Frontend Agent Orchestration Guidance)
+
+### Task 9.2: Build an Orchestration-Aware Frontend Planning Backlog
+- [ ] Define and document how DETSMS frontend agents build a planning backlog from frontend-coordination.md by:
+  - Extracting all stories marked Ready or Parallel
+  - Grouping stories by DETSMS domain (Work Execution & Billing, Inventory Control, Product & Pricing, CRM, Accounting)
+  - Cross-checking each story against DETSMS requirements and design to ensure domain alignment
+- **Location**: moqui_example/.kiro/specs/agent-structure/task.md (Sections: "Build a Frontend Planning Backlog"), moqui_example/.kiro/specs/requirements.md
+- **Requirements**: Requirement 11
+
+### Task 9.3: Encode Stub-Avoidance Rules for Frontend Stories
+- [ ] Operationalize stub-avoidance rules so that DETSMS frontend agents:
+  - Do NOT select Blocked stories unless frontend-coordination.md explicitly allows a stub and describes constraints
+  - Record stub behavior, response shape, and error handling in Notes for Agents when stubs are used
+  - Isolate any allowed stub implementations behind adapter/service layers to make later replacement trivial
+- **Location**: moqui_example/.kiro/specs/agent-structure/task.md (Section: "Apply Stub-Avoidance Rules"), related Notes for Agents guidance
+- **Requirements**: Requirement 11 (AC2), Frontend Agent Orchestration Awareness
+
+### Task 9.4: Implement Guidance for Parallel and Ready Stories
+- [ ] Define concrete guidance for implementing Ready and Parallel DETSMS frontend stories so that agents:
+  - Use API contracts and payload examples from orchestration documents and Notes for Agents
+  - For Parallel stories, design Moqui services, screens, and Vue components assuming documented contracts without requiring live backend
+  - For Ready stories, validate referenced backend work is complete or available based on orchestration docs and linked backend issues
+- **Location**: moqui_example/.kiro/specs/agent-structure/task.md (Section: "Implement Parallel and Ready Stories"), moqui_example/runtime/component/moqui-agents/src/main/java/com/example/moquiagents/agents/implementation/FrontendAgent.java
+- **Requirements**: Requirement 11 (AC1, AC3, AC4), REQ-001, REQ-008, REQ-009
+
+### Task 9.5: Define Silo-Friendly Issue Coordination Patterns
+- [ ] Document and enforce that all cross-team questions and clarifications for DETSMS frontend stories are raised as comments on the corresponding [STORY] issues rather than out-of-band channels.
+- [ ] When frontend work reveals missing backend contracts, require agents to:
+  - Document expected endpoints, payloads, and error behavior in Notes for Agents
+  - Tag workspace orchestration agents or relevant owners in the issue
+- **Location**: moqui_example/.kiro/specs/agent-structure/task.md (Section: "Coordination via Issues (Silo-Friendly)"), durion/.github/orchestration/frontend-coordination.md (referenced behavior)
+- **Requirements**: Requirement 11 (AC5), Frontend Agent Orchestration Awareness
+
+### Task 9.6: Keep Frontend Orchestration State in Sync
+- [ ] Define the lifecycle rules DETSMS frontend agents must follow to keep orchestration aligned with actual implementation state:
+  - When a story starts, update the corresponding issue state and, if necessary, suggest orchestration status updates (e.g., In progress)
+  - When a story completes, verify acceptance criteria, post a concise implementation summary, and note any deviations from assumptions
+  - When real behavior diverges from orchestration assumptions, propose changes back to story-sequence.md and frontend-coordination.md via issue comments
+- [ ] Establish a sprint-planning checklist for DETSMS frontend work that includes:
+  - Orchestration docs reviewed and timestamps checked
+  - Ready and Parallel stories identified and grouped by domain
+  - Blocked stories only included when explicit stub rules exist
+  - Clarifications requested on issues before implementation starts
+- **Location**: moqui_example/.kiro/specs/agent-structure/task.md (Sections: "Keep Orchestration in Sync" and "Checklist for Each Sprint Planning Cycle"), durion/.github/orchestration/frontend-coordination.md
+- **Requirements**: Requirement 11 (AC1, AC3, AC5)
+
 ---
 
 ## Summary: Implementation Overview
@@ -788,7 +843,8 @@ The phased approach ensures:
 - **Phase 6: Usability & Developer Experience** - 2 tasks (Onboarding, Context-Aware Guidance)
 - **Phase 7: Integration and Testing** - 3 tasks (Correctness Properties, Traceability, Cross-Project Integration)
 - **Phase 8: Deployment and Monitoring** - 3 tasks (High Availability, Disaster Recovery, Final Validation)
-- **Total**: 31+ implementation tasks plus 3 checkpoint gates
+- **Phase 9: Frontend Story Orchestration Integration** - 6 tasks (Workspace orchestration awareness, planning backlog, stub-avoidance, Ready/Parallel implementation, issue coordination, orchestration sync)
+- **Total**: 37+ implementation and operational tasks plus 3 checkpoint gates
 
 ### Requirements Coverage
 - **14 Requirements**: REQ-001 through REQ-014

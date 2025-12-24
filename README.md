@@ -131,6 +131,8 @@ java -jar runtime/build/libs/moqui.war
 │   │   ├── durion-product/        # Product master data and catalogs
 │   │   ├── durion-theme/          # Durion theme assets and configuration
 │   │   └── durion-workexec/       # Work execution and operations
+│   │   └── durion-hr/             # Manage People, Roles and Permissions
+│   │   └── durion-shopmgr/        # Manage the shop , mechanics and appointments
 │   ├── conf/                      # Configuration files
 │   ├── db/                        # Database scripts
 │   ├── lib/                       # Runtime libraries
@@ -328,6 +330,8 @@ See [Dev-Deploy Agent](.github/agents/dev-deploy-agent.md) for comprehensive dep
 - **durion-product/** - Product master data and catalogs
 - **durion-theme/** - Durion theme assets and configuration
 - **durion-workexec/** - Work execution and operations
+- **durion-hr/** - People Management
+- **durion-shopmgr/** - Shop Management
 
 ## AI Agents
 
@@ -463,7 +467,7 @@ docker-compose exec moqui gradle load
 ### TIOTF & Durion
 
 - **TIOTF Website** - [tiotf.org](https://www.tiotf.org)
-- **Durion Website** - [durioneq.com](https://www.durioneq.com)
+- **Durion Website** - [durioneq.com](https://www.durion.org)
 
 ## License
 
