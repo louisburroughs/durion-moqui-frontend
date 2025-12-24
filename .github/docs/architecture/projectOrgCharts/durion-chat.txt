@@ -1,0 +1,26 @@
+runtime/component/durion-chat/
+	entity/
+		DurChatSession.xml        # chat sessions, linked to user/party
+		DurChatMessage.xml        # individual chat messages and metadata
+	service/
+		DurChatServices.xml       # chat orchestration + calls to backend MCP server
+	script/
+		groovy/
+			DurChatServices.groovy  # Groovy implementations for chat + MCP integration
+	screen/
+		durion/
+			chat/
+				ChatMain.xml          # main chat UI container
+				ChatSessionFind.xml   # list/search existing chat sessions
+				ChatSessionView.xml   # view of a single conversation
+	data/
+		DurChatDemoData.xml       # optional demo chat sessions/messages
+
+Notes:
+	- The DurChatServices layer will be responsible for calling the
+		pos-mcp-server backend (e.g., /api/mcp/chat) to execute MCP
+		tools and agentic workflows on behalf of the user.
+	- The UI screens should remain thin, delegating all back-end
+		logic and tool selection to DurChatServices so that front-end
+		changes do not impact MCP integration details.
+

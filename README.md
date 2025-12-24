@@ -129,10 +129,12 @@ java -jar runtime/build/libs/moqui.war
 │   │   ├── durion-inventory/      # Inventory management
 │   │   ├── durion-positivity/     # Integration with durion-positivity-backend
 │   │   ├── durion-product/        # Product master data and catalogs
+│   │   ├── durion-sales/          # Sales and order capture flows
 │   │   ├── durion-theme/          # Durion theme assets and configuration
-│   │   └── durion-workexec/       # Work execution and operations
-│   │   └── durion-hr/             # Manage People, Roles and Permissions
-│   │   └── durion-shopmgr/        # Manage the shop , mechanics and appointments
+│   │   ├── durion-workexec/       # Work execution and operations
+│   │   ├── durion-hr/             # People, roles, and permissions
+│   │   ├── durion-shopmgr/        # Shop management, mechanics, appointments
+│   │   └── moqui-agents/          # Moqui-specific agent framework and tests
 │   ├── conf/                      # Configuration files
 │   ├── db/                        # Database scripts
 │   ├── lib/                       # Runtime libraries
@@ -332,6 +334,8 @@ See [Dev-Deploy Agent](.github/agents/dev-deploy-agent.md) for comprehensive dep
 - **durion-workexec/** - Work execution and operations
 - **durion-hr/** - People Management
 - **durion-shopmgr/** - Shop Management
+- **durion-sales/** - Sales workflows and POS sales screens
+- **moqui-agents/** - Moqui agents and supporting components
 
 ## AI Agents
 

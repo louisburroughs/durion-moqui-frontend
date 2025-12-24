@@ -16,5 +16,6 @@
     <component name="durion-hr" group="louisburroughs" version="1" branch="main"/>
     <component name="durion-shopmgr" group="louisburroughs" version="1" branch="main"/>
     <component name="durion-sales" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-chat" group="louisburroughs" version="1" branch="main"/>
     <component name="moqui-agents" group="louisburroughs" version="1" branch="main"/>
 </addons>
