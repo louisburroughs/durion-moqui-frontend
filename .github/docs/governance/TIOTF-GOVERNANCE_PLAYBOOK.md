@@ -92,6 +92,44 @@ Influence is **highest early**.
 
 ---
 
+## 6A. Financial Neutrality & Anti-Capture Safeguards
+
+TIOTF explicitly separates **financial support** from **governance authority** to preserve long-term neutrality, trust, and industry-wide legitimacy.
+
+Accordingly:
+
+- Membership dues, regardless of tier, **do not** alter voting power or board eligibility
+- Voluntary donations, grants, or sponsorships **do not** confer:
+  - roadmap influence,
+  - standards-setting authority,
+  - certification preference,
+  - or committee control
+- All technical, standards, and policy decisions are made through **open, documented processes** governed by the appropriate committees and the Board
+
+### Anti-Capture Commitment
+
+TIOTF adopts an explicit **anti-capture posture** to prevent real or perceived dominance by any single organization, sector, or interest group.
+
+Safeguards include:
+
+- One-member–one-vote governance
+- Term limits and rotation for Board and committee leadership
+- Sector balance requirements for Board composition
+- Open participation in working groups
+- Transparent publication of decisions, rationales, and meeting records
+
+### Protection of Smaller Members
+
+These safeguards are intended to ensure that:
+
+- Smaller and emerging organizations can participate meaningfully
+- Early financial supporters are recognized **without acquiring control**
+- Standards, software, and certifications remain **open, voluntary, and non-discriminatory**
+
+This separation of funding from authority is foundational to TIOTF’s mission and is enforced through its Charter, Bylaws, and Governance Policies.
+
+---
+
 ## 7. Board Onboarding
 
 Directors receive:
