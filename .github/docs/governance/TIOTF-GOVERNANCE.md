@@ -41,6 +41,15 @@ Termination requires:
 1. Recommendation from the **Ethics & Governance Committee**
 2. Confirmation by a **majority vote** of the Board or Interim Governing Committee
 
+### Section 3. Financial Neutrality
+
+No membership tier, contribution, or donation shall confer additional
+governance authority, voting rights, or preferential standards treatment.
+
+This provision shall be interpreted broadly to prevent real or perceived
+organizational capture.
+
+
 ---
 
 ## ARTICLE III – INTERIM GOVERNANCE (PRE-BOARD ACTIVATION)
