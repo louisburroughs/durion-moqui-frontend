@@ -72,32 +72,55 @@ All powers shall be exercised exclusively to further the Corporation’s lawful 
 ---
 
 ## ARTICLE V – MEMBERSHIP
+### Section 1 — Membership Classes
 
-### Section 1 — Classes of Members
+TIOTF shall maintain capacity-based membership tiers that are sector-neutral and non-hierarchical in governance.
 
-TIOTF shall have membership classes including, but not limited to:
+Membership tiers reflect organizational scale and ability to contribute, not industry segment or influence.
 
-* Manufacturer Members
-* Service Provider Members
-* Technology Members
-* Fleet / End-User Members
-* Individual Contributor Members
-* Academic / Research Members (non-voting if so defined in bylaws)
-* Government / Regulatory Liaisons (non-voting)
+Membership categories may include, but are not limited to:
 
-### Section 2 — Membership Dues
+- Manufacturer Members
+- Service Provider Members
+- Technology Members
+- Fleet / End-User Members
+- Individual Contributor Members
+- Academic / Research Members (non-voting if designated)
+- Government / Regulatory Liaisons (non-voting)
 
-Membership dues tiers shall be established by the Board and maintained in the bylaws or a separate Membership Policy.
+### Section 2 — Membership Tiers and Dues
 
-### Section 3 — Rights and Obligations
+Membership tiers and dues shall be established and maintained by the Board in a published Membership Policy, and shall:
 
-Members agree to:
+- Be based on organizational size and capacity
+- Apply uniformly across all sectors
+- Not convey additional governance rights
+- All voting members shall have equal voting rights, regardless of tier.
 
-* Uphold TIOTF standards and codes of conduct.
-* Participate in working groups.
-* Support the open-source and interoperability mission.
+### Section 3 — Founding and Early Membership Recognition
 
-Membership does **not** confer ownership, profit rights, or equity.
+The Corporation may recognize Founding Members or Early Members based on the timing of their admission.
+
+Such recognition:
+
+- Is honorary and non-governing
+- Does not convey additional voting rights
+- May include permanent public recognition and advisory participation
+
+### Section 4 — Rights and Obligations
+
+Membership confers the right to:
+
+- Participate in working groups and committees
+- Vote as defined in the bylaws
+- Access TIOTF standards, specifications, and open-source assets
+
+Membership does not confer:
+
+- Ownership
+- Equity
+- Profit rights
+- Preferential commercial treatment
 
 ---
 
