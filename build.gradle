@@ -133,13 +133,13 @@ task cleanGenerated(type: Delete) {
 // ========== testing framework dependencies ==========
 
 dependencies {
-    // jqwik for property-based testing
-    testImplementation 'net.jqwik:jqwik:1.8.2'
-    testImplementation 'net.jqwik:jqwik-groovy:1.8.2'
+    // // jqwik for property-based testing
+    // testImplementation 'net.jqwik:jqwik:1.8.2'
+    // testImplementation 'net.jqwik:jqwik-groovy:1.8.2'
     
-    // Additional testing utilities for generated agents
-    testImplementation 'org.mockito:mockito-core:5.8.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
+    // // Additional testing utilities for generated agents
+    // testImplementation 'org.mockito:mockito-core:5.8.0'
+    // testImplementation 'org.mockito:mockito-junit-jupiter:5.8.0'
     
     // Generated agent dependencies inherit from framework
     generatedAgentsImplementation project(':framework')
