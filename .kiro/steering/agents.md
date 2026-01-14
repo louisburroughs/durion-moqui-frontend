@@ -8,7 +8,7 @@ This project includes a comprehensive set of predefined AI agents in `.github/ag
 
 ### Architecture & Design Agents
 
-#### **architecture-agent.md** - Chief Architect
+#### **architecture.agent.md** - Chief Architect
 
 - **Purpose**: Domain-driven design, architectural integrity, system maintainability
 - **Key Capabilities**:
@@ -20,7 +20,7 @@ This project includes a comprehensive set of predefined AI agents in `.github/ag
 - **When to Use**: Before major architectural changes, component design, cross-domain integrations
 - **References**: `.github/docs/architecture/project.json`, RACI matrices, component org charts
 
-#### **api-agent.md** - REST API Specialist  
+#### **api.agent.md** - REST API Specialist  
 
 - **Purpose**: REST API development, error handling, API consistency
 - **Key Capabilities**:
@@ -29,11 +29,11 @@ This project includes a comprehensive set of predefined AI agents in `.github/ag
   - Creates API documentation with request/response examples
   - Manages API versioning and backward compatibility
 - **When to Use**: Creating new REST endpoints, API error handling, API documentation
-- **Integration**: Works with moquiDeveloper-agent for implementation
+- **Integration**: Works with moquiDeveloper.agent for implementation
 
-#### **moquiDeveloper-agent.md** – Primary Implementation Agent (Pair-Contracted)
+#### **moquiDeveloper.agent.md** – Primary Implementation Agent (Pair-Contracted)
 
-- **Purpose**: Core Moqui Framework code implementation, executed in active pairing with **moquiPairNavigator-agent**
+- **Purpose**: Core Moqui Framework code implementation, executed in active pairing with **moquiPairNavigator.agent**
 
 - **Core Mandate**:
   Deliver correct, maintainable Moqui implementations while honoring architectural intent, domain boundaries, and flow constraints enforced by the pairing navigator.
@@ -42,11 +42,11 @@ This project includes a comprehensive set of predefined AI agents in `.github/ag
 
 ## 🔗 Pairing Contract (Non-Optional)
 
-The **moquiDeveloper-agent** operates under a binding pairing agreement with **moquiPairNavigator-agent**.
+The **moquiDeveloper.agent** operates under a binding pairing agreement with **moquiPairNavigator.agent**.
 
 ### Stop-Phrase Contract
 
-- Any stop-phrase emitted by **moquiPairNavigator-agent** is a **hard interrupt**
+- Any stop-phrase emitted by **moquiPairNavigator.agent** is a **hard interrupt**
 - Upon hearing a stop-phrase, the agent must:
   1. **Pause implementation immediately**
   2. **Summarize current intent** in 1–2 sentences (what problem is being solved and why)
@@ -120,8 +120,8 @@ When any of the above are necessary, the agent must **state the justification ex
 
 ## 🧩 Integration
 
-- Receives architectural intent and constraints from **architecture-agent**
-- Pairs continuously with **moquiPairNavigator-agent** for loop detection, simplification pressure, and creative alternatives
+- Receives architectural intent and constraints from **architecture.agent**
+- Pairs continuously with **moquiPairNavigator.agent** for loop detection, simplification pressure, and creative alternatives
 - Coordinates with validation, security, and test agents only after a stable vertical slice exists
 
 ---
@@ -134,12 +134,12 @@ When any of the above are necessary, the agent must **state the justification ex
 - Minimal rework and refactor churn
 - Sustained development flow without circular decision-making
 
-#### **moquiPairNavigator-agent.md** – Secondary Pairing, Flow & Loop Sentinel
+#### **moquiPairNavigator.agent.md** – Secondary Pairing, Flow & Loop Sentinel
 
 - **Purpose**: Creative counterbalance and flow guardian for Moqui Framework development
 
 - **Core Role**:
-  Acts as an equal technical partner to **moquiDeveloper-agent**, monitoring implementation behavior in real time. The agent’s mandate is to prevent loops, preserve architectural intent, and expand solution space using Moqui-idiomatic patterns.
+  Acts as an equal technical partner to **moquiDeveloper.agent**, monitoring implementation behavior in real time. The agent’s mandate is to prevent loops, preserve architectural intent, and expand solution space using Moqui-idiomatic patterns.
 
 ---
 
@@ -302,7 +302,7 @@ If **two different stop-phrases** trigger within the same work session:
 - The agent must recommend a **reset**, such as:
   - Re-stating the business goal
   - Re-slicing the feature vertically
-  - Re-consulting the architecture-agent
+  - Re-consulting the architecture.agent
 
 ---
 
@@ -316,7 +316,7 @@ If **two different stop-phrases** trigger within the same work session:
 
 ### Infrastructure & Operations Agents
 
-#### **dev-deploy-agent.md** - DevOps Engineer
+#### **dev-deploy.agent.md** - DevOps Engineer
 
 - **Purpose**: Local development deployment, containerization, CI/CD
 - **Key Capabilities**:
@@ -327,7 +327,7 @@ If **two different stop-phrases** trigger within the same work session:
 - **When to Use**: Docker setup, build optimization, deployment issues
 - **Security Focus**: Never hardcodes secrets, implements proper secrets management
 
-#### **dba-agent.md** - Database Administrator
+#### **dba.agent.md** - Database Administrator
 
 - **Purpose**: Database design, performance, migrations
 - **Key Capabilities**:
@@ -336,7 +336,7 @@ If **two different stop-phrases** trigger within the same work session:
   - Ensures data integrity and security
 - **When to Use**: Database schema changes, performance issues, data modeling
 
-#### **sre-agent.md** - Site Reliability Engineer
+#### **sre.agent.md** - Site Reliability Engineer
 
 - **Purpose**: System reliability, monitoring, performance
 - **Key Capabilities**:
@@ -347,7 +347,7 @@ If **two different stop-phrases** trigger within the same work session:
 
 ### Quality & Validation Agents
 
-#### **test-agent.md** - Testing Specialist
+#### **test.agent.md** - Testing Specialist
 
 - **Purpose**: Test strategy, test implementation, quality assurance
 - **Key Capabilities**:
@@ -356,7 +356,7 @@ If **two different stop-phrases** trigger within the same work session:
   - Validates functional correctness
 - **When to Use**: Test implementation, test strategy, quality validation
 
-#### **lint-agent.md** - Code Quality Enforcer
+#### **lint.agent.md** - Code Quality Enforcer
 
 - **Purpose**: Code formatting, static analysis, style enforcement
 - **Key Capabilities**:
@@ -367,7 +367,7 @@ If **two different stop-phrases** trigger within the same work session:
 
 ### Specialized Domain Agents
 
-#### **docs-agent.md** - Documentation Specialist
+#### **docs.agent.md** - Documentation Specialist
 
 - **Purpose**: Technical documentation, API docs, architecture documentation
 - **When to Use**: Creating documentation, API documentation, architectural documentation
@@ -377,7 +377,7 @@ If **two different stop-phrases** trigger within the same work session:
 - **Purpose**: Web accessibility compliance, WCAG guidelines
 - **When to Use**: UI development, accessibility audits, compliance requirements
 
-#### **i18n-agent.md** - Internationalization Expert
+#### **i18n.agent.md** - Internationalization Expert
 
 - **Purpose**: Multi-language support, localization
 - **When to Use**: Internationalization requirements, multi-language features
@@ -385,35 +385,35 @@ If **two different stop-phrases** trigger within the same work session:
 #### Language-Specific Agents
 
 - **java-mcp-expert.agent.md** - Java/MCP integration specialist
-- **typescript-agent.md** - TypeScript development
-- **vue-agent.md** - Vue.js frontend development
+- **typescript.agent.md** - TypeScript development
+- **vue.agent.md** - Vue.js frontend development
 - **python-mcp-expert.agent.md** - Python/MCP integration
 
 ## Agent Collaboration Patterns
 
 ### Primary Development Workflow
 
-1. **Architecture Design** (`architecture-agent`)
+1. **Architecture Design** (`architecture.agent`)
    - Define domain boundaries and component responsibilities
    - Review against RACI matrices and project.json
    - Create architectural decisions and patterns
 
-2. **Implementation** (`moquiDeveloper-agent`)
+2. **Implementation** (`moquiDeveloper.agent`)
    - Implement entities, services, screens following architectural guidance
    - Follow domain boundaries and naming conventions
    - Coordinate with specialized agents as needed
 
-3. **API Development** (`api-agent`)
+3. **API Development** (`api.agent`)
    - Design REST endpoints following Moqui conventions
    - Implement error handling and validation
    - Create API documentation
 
 4. **Quality Validation**
-   - **Testing** (`test-agent`) - Create comprehensive test suites
-   - **Code Quality** (`lint-agent`) - Enforce formatting and style
-   - **Documentation** (`docs-agent`) - Generate technical documentation
+   - **Testing** (`test.agent`) - Create comprehensive test suites
+   - **Code Quality** (`lint.agent`) - Enforce formatting and style
+   - **Documentation** (`docs.agent`) - Generate technical documentation
 
-5. **Deployment** (`dev-deploy-agent`)
+5. **Deployment** (`dev-deploy.agent`)
    - Build and containerize applications
    - Manage local development environments
    - Implement CI/CD pipelines
@@ -423,12 +423,12 @@ If **two different stop-phrases** trigger within the same work session:
 #### Architecture → Implementation
 
 ```
-architecture-agent defines:
+architecture.agent defines:
 - Domain boundaries and component placement
 - Service naming conventions
 - Integration patterns via durion-positivity
 
-moquiDeveloper-agent implements:
+moquiDeveloper.agent implements:
 - Entities following domain ownership
 - Services following naming conventions
 - Integration through positivity layer only
@@ -437,26 +437,26 @@ moquiDeveloper-agent implements:
 #### Implementation → Validation
 
 ```
-moquiDeveloper-agent produces:
+moquiDeveloper.agent produces:
 - Testable code with clear interfaces
 - Lint-compliant formatting
 - API-contract accurate endpoints
 
 Validation agents verify:
-- test-agent: Functional correctness
-- lint-agent: Code quality and style
-- api-agent: REST contract compliance
+- test.agent: Functional correctness
+- lint.agent: Code quality and style
+- api.agent: REST contract compliance
 ```
 
 #### Infrastructure Support
 
 ```
-dev-deploy-agent provides:
+dev-deploy.agent provides:
 - Docker environments for development
 - Build pipelines for CI/CD
 - Secrets management for security
 
-dba-agent ensures:
+dba.agent ensures:
 - Optimal database performance
 - Proper indexing strategies
 - Safe migration procedures
@@ -469,29 +469,29 @@ dba-agent ensures:
 When creating specs, reference appropriate agents:
 
 1. **Requirements Phase**
-   - Consult `architecture-agent` for domain classification
+   - Consult `architecture.agent` for domain classification
    - Reference RACI matrices for responsibility assignment
    - Consider integration patterns from durion-positivity
 
 2. **Design Phase**
-   - Use `architecture-agent` for component placement decisions
-   - Consult `api-agent` for REST endpoint design
-   - Reference `dba-agent` for data modeling decisions
+   - Use `architecture.agent` for component placement decisions
+   - Consult `api.agent` for REST endpoint design
+   - Reference `dba.agent` for data modeling decisions
 
 3. **Implementation Planning**
-   - Plan tasks using `moquiDeveloper-agent` capabilities
-   - Include validation tasks for `test-agent` and `lint-agent`
-   - Consider deployment requirements from `dev-deploy-agent`
+   - Plan tasks using `moquiDeveloper.agent` capabilities
+   - Include validation tasks for `test.agent` and `lint.agent`
+   - Consider deployment requirements from `dev-deploy.agent`
 
 ### Task Execution Integration
 
 When executing spec tasks:
 
-1. **Architecture Tasks** - Reference `architecture-agent` patterns and principles
-2. **Implementation Tasks** - Follow `moquiDeveloper-agent` guidelines and boundaries
-3. **API Tasks** - Use `api-agent` conventions and error handling patterns
-4. **Testing Tasks** - Apply `test-agent` strategies and frameworks
-5. **Deployment Tasks** - Follow `dev-deploy-agent` security and containerization practices
+1. **Architecture Tasks** - Reference `architecture.agent` patterns and principles
+2. **Implementation Tasks** - Follow `moquiDeveloper.agent` guidelines and boundaries
+3. **API Tasks** - Use `api.agent` conventions and error handling patterns
+4. **Testing Tasks** - Apply `test.agent` strategies and frameworks
+5. **Deployment Tasks** - Follow `dev-deploy.agent` security and containerization practices
 
 ## Agent Reference Quick Guide
 
@@ -499,25 +499,25 @@ When executing spec tasks:
 
 | Phase | Primary Agent | Supporting Agents |
 |-------|---------------|-------------------|
-| **Architecture** | architecture-agent | dba-agent, sre-agent |
-| **API Design** | api-agent | architecture-agent, docs-agent |
-| **Implementation** | moquiDeveloper-agent | architecture-agent, lint-agent |
-| **Testing** | test-agent | moquiDeveloper-agent, api-agent |
-| **Deployment** | dev-deploy-agent | sre-agent, dba-agent |
-| **Documentation** | docs-agent | api-agent, architecture-agent |
+| **Architecture** | architecture.agent | dba.agent, sre.agent |
+| **API Design** | api.agent | architecture.agent, docs.agent |
+| **Implementation** | moquiDeveloper.agent | architecture.agent, lint.agent |
+| **Testing** | test.agent | moquiDeveloper.agent, api.agent |
+| **Deployment** | dev-deploy.agent | sre.agent, dba.agent |
+| **Documentation** | docs.agent | api.agent, architecture.agent |
 
 ### By Problem Domain
 
 | Problem | Recommended Agent | Key Capabilities |
 |---------|-------------------|------------------|
-| **Domain Boundaries** | architecture-agent | DDD, component dependencies, RACI |
-| **REST APIs** | api-agent | Endpoint design, error handling, contracts |
-| **Code Implementation** | moquiDeveloper-agent | Entities, services, screens, business logic |
-| **Database Issues** | dba-agent | Schema design, performance, migrations |
-| **Build/Deploy Issues** | dev-deploy-agent | Docker, CI/CD, secrets management |
-| **Performance Issues** | sre-agent | Monitoring, scaling, reliability |
-| **Code Quality** | lint-agent | Formatting, static analysis, standards |
-| **Testing Strategy** | test-agent | Unit tests, integration tests, automation |
+| **Domain Boundaries** | architecture.agent | DDD, component dependencies, RACI |
+| **REST APIs** | api.agent | Endpoint design, error handling, contracts |
+| **Code Implementation** | moquiDeveloper.agent | Entities, services, screens, business logic |
+| **Database Issues** | dba.agent | Schema design, performance, migrations |
+| **Build/Deploy Issues** | dev-deploy.agent | Docker, CI/CD, secrets management |
+| **Performance Issues** | sre.agent | Monitoring, scaling, reliability |
+| **Code Quality** | lint.agent | Formatting, static analysis, standards |
+| **Testing Strategy** | test.agent | Unit tests, integration tests, automation |
 
 ## Best Practices for Agent Integration
 
@@ -529,30 +529,30 @@ When executing spec tasks:
 
 ### 2. **Maintain Consistency**
 
-- Follow naming conventions from `architecture-agent` and `moquiDeveloper-agent`
-- Use error handling patterns from `api-agent`
-- Apply security practices from `dev-deploy-agent`
+- Follow naming conventions from `architecture.agent` and `moquiDeveloper.agent`
+- Use error handling patterns from `api.agent`
+- Apply security practices from `dev-deploy.agent`
 
 ### 3. **Validate Continuously**
 
-- Use `test-agent` patterns for comprehensive testing
-- Apply `lint-agent` standards for code quality
-- Follow `docs-agent` guidelines for documentation
+- Use `test.agent` patterns for comprehensive testing
+- Apply `lint.agent` standards for code quality
+- Follow `docs.agent` guidelines for documentation
 
 ### 4. **Coordinate Dependencies**
 
-- Respect domain boundaries defined by `architecture-agent`
+- Respect domain boundaries defined by `architecture.agent`
 - Use integration patterns from durion-positivity documentation
-- Follow deployment practices from `dev-deploy-agent`
+- Follow deployment practices from `dev-deploy.agent`
 
 ## Agent Documentation Locations
 
 All agent definitions are stored in `.github/agents/` with the following key files:
 
-- **Core Development**: `architecture-agent.md`, `moquiDeveloper-agent.md`, `api-agent.md`
-- **Infrastructure**: `dev-deploy-agent.md`, `dba-agent.md`, `sre-agent.md`
-- **Quality**: `test-agent.md`, `lint-agent.md`, `docs-agent.md`
-- **Specialized**: `accessibility.agent.md`, `i18n-agent.md`, language-specific agents
+- **Core Development**: `architecture.agent.md`, `moquiDeveloper.agent.md`, `api.agent.md`
+- **Infrastructure**: `dev-deploy.agent.md`, `dba.agent.md`, `sre.agent.md`
+- **Quality**: `test.agent.md`, `lint.agent.md`, `docs.agent.md`
+- **Specialized**: `accessibility.agent.md`, `i18n.agent.md`, language-specific agents
 
 Each agent file contains:
 

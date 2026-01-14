@@ -151,12 +151,12 @@ java -jar runtime/build/libs/moqui.war
 │   └── simple/                    # Simple Dockerfile for custom builds
 ├── .github/
 │   ├── agents/                    # AI agent guides (40+ specialized agents)
-│   │   ├── architecture-agent.md  # System architecture & DDD guidance
-│   │   ├── api-agent.md           # REST API development patterns
-│   │   ├── vue-agent.md           # Vue.js 3 frontend expert
-│   │   ├── moquiDeveloper-agent.md # Moqui implementation patterns
-│   │   ├── sre-agent.md           # SRE and observability
-│   │   ├── test-agent.md          # Testing strategies (Spock/Jest)
+│   │   ├── architecture.agent.md  # System architecture & DDD guidance
+│   │   ├── api.agent.md           # REST API development patterns
+│   │   ├── vue.agent.md           # Vue.js 3 frontend expert
+│   │   ├── moquiDeveloper.agent.md # Moqui implementation patterns
+│   │   ├── sre.agent.md           # SRE and observability
+│   │   ├── test.agent.md          # Testing strategies (Spock/Jest)
 │   │   └── ...
 │   ├── docs/
 │   │   ├── architecture/          # Architecture documentation
