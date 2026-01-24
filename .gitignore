@@ -9,7 +9,7 @@ build
 /Save*.zip
 
 # runtime directory (separate repository so ignore directory entirely)
-# /runtime
+/runtime/*
 /execwartmp
 /docker/runtime
 /docker/db
@@ -26,6 +26,10 @@ build
 !/docker/certs/moqui2.local.*
 !/docker/certs/moqui.local.*
 !/docker/certs/README
+
+# Add back components
+!runtime/component/durion-*
+!runtime/component/durion-*/**
 
 # IntelliJ IDEA files
 .idea
