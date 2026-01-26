@@ -17,7 +17,7 @@
     <component name="durion-product" group="louisburroughs" version="1" branch="main"/>
     <component name="durion-common" group="louisburroughs" version="1" branch="main"/>
     <component name="durion-accounting" group="louisburroughs" version="1" branch="main"/>
-    <component name="durion-positivity" group="louisburroughs" version="1" branch="main"/>
+    <component name="durion-positivity" group="louisburroughs" version="1" branch="master"/>
     <component name="durion-hr" group="louisburroughs" version="1" branch="main"/>
     <component name="durion-shopmgr" group="louisburroughs" version="1" branch="main"/>
     <component name="durion-sales" group="louisburroughs" version="1" branch="main"/>
