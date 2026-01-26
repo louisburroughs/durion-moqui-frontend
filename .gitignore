@@ -9,6 +9,7 @@ build
 /Save*.zip
 
 # runtime directory (separate repository so ignore directory entirely)
+runtime/
 /runtime
 /runtime/*
 /execwartmp
@@ -85,4 +86,4 @@ Desktop.ini
 .kiro/run-logs
 
 #temp processing document
-Durion-Processing.mdruntime/
+Durion-Processing.md
