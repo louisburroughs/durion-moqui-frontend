@@ -1,0 +1,104 @@
+name: Dependency & Security Updates
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # Weekly on Monday at midnight
+  workflow_dispatch:
+
+env:
+  JAVA_VERSION: '11'
+  JAVA_DISTRIBUTION: 'temurin'
+  NODE_VERSION: '18'
+
+jobs:
+  check-gradle-dependencies:
+    name: Check Gradle Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          cache: gradle
+      
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+      
+      - name: Check for dependency updates
+        run: ./gradlew dependencyUpdates -Drevision=release
+        continue-on-error: true
+      
+      - name: Generate dependency tree
+        run: ./gradlew dependencies > gradle-dependencies.txt
+      
+      - name: Upload dependency reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-dependency-reports
+          path: |
+            gradle-dependencies.txt
+            build/dependencyUpdates/
+          retention-days: 30
+
+  check-npm-dependencies:
+    name: Check NPM Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: Check for outdated packages
+        run: npm outdated > npm-outdated.txt || true
+      
+      - name: Run npm audit
+        run: npm audit --json > npm-audit.json || true
+      
+      - name: Upload NPM reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-dependency-reports
+          path: |
+            npm-outdated.txt
+            npm-audit.json
+          retention-days: 30
+
+  security-scan:
+    name: Security Vulnerability Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          cache: gradle
+      
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+      
+      - name: Run OWASP Dependency Check
+        run: ./gradlew dependencyCheckAnalyze
+        continue-on-error: true
+      
+      - name: Upload security report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-scan-report
+          path: '**/build/reports/dependency-check-report.html'
+          retention-days: 90

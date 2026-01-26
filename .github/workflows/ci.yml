@@ -1,0 +1,62 @@
+name: Moqui CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'runtime/component/**'
+      - 'framework/**'
+      - 'build.gradle'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'runtime/component/**'
+      - 'framework/**'
+      - 'build.gradle'
+      - '.github/workflows/ci.yml'
+  workflow_dispatch:
+
+env:
+  JAVA_VERSION: '11'
+  JAVA_DISTRIBUTION: 'temurin'
+  GRADLE_OPTS: -Xmx2048m
+
+jobs:
+  build:
+    name: Gradle Build (Java 11)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          cache: gradle
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build (includes tests)
+        run: ./gradlew clean build --stacktrace
+
+      - name: Upload Moqui WAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: moqui-runtime
+          path: runtime/build/libs/moqui.war
+          retention-days: 7
