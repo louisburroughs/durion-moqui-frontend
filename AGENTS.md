@@ -58,6 +58,7 @@ java -jar runtime/build/libs/moqui.war
 - `.github/agents/sre.agent.md` (observability)
 - `../AGENTS.md` (workspace-level guidance)
 - Frontend test agent: `../durion-moqui-frontend/.github/agents/test.agent.md` (if present)
+- **Architecture**: `../docs/adr/0010-frontend-domain-responsibilities-guide.adr.md` (component domains, API routing through durion-positivity)
 
 ## Notes for Agents
 - Keep PII out of telemetry. Do not upload secrets/sensitive data in spans/attributes.

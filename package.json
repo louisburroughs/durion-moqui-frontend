@@ -6,7 +6,11 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "lint": "eslint 'runtime/component/**/webapp/**/*.{js,ts,vue}' --max-warnings=0",
+    "lint:fix": "eslint 'runtime/component/**/webapp/**/*.{js,ts,vue}' --fix",
+    "lint:api-gateway": "eslint 'runtime/component/durion-*/webapp/**/*.{js,ts,vue}' --rule 'no-direct-api-calls/*: error'",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@vue/test-utils": "^2.4.3",
@@ -17,7 +21,12 @@
     "babel-jest": "^29.7.0",
     "vue-jest": "^5.0.0",
     "@types/jest": "^29.5.8",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "eslint": "^8.56.0",
+    "eslint-plugin-vue": "^9.20.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "husky": "^8.0.3"
   },
   "jest": {
     "testEnvironment": "jsdom",
